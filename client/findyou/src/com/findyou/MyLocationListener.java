@@ -44,12 +44,16 @@ public class MyLocationListener implements BDLocationListener {
 		logLocationInfo(location);
 		
 		MyLocationOverlay myOverlay = LayerUtils.getMyLocationOverlay(mMapView, location.getLatitude(), location.getLongitude());
-		mMapView.getOverlays().add(myOverlay);
-		
-		setViewToLocation(location.getLatitude(), location.getLongitude());
-		
-		sendLocationInfoToServer(location);
-		mMapView.refresh();
+		try {
+			mMapView.getOverlays().add(myOverlay);
+			
+			setViewToLocation(location.getLatitude(), location.getLongitude());
+			
+			sendLocationInfoToServer(location);
+			mMapView.refresh();
+		} catch (Exception e) {
+			Log.e("MyLocationListener", "onReceiveLocation error! which location:" + location.toJsonString(), e);
+		}
 	}
 	
 	// 把位置信息上传到服务器上
