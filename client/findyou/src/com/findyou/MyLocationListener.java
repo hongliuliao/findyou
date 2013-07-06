@@ -3,6 +3,7 @@
  */
 package com.findyou;
 
+import android.app.AlertDialog;
 import android.util.Log;
 
 import com.baidu.location.BDLocation;
@@ -41,6 +42,7 @@ public class MyLocationListener implements BDLocationListener {
 		this.myTelphoneNumber = myTelphoneNumber;
 		mapViewLocation = new MapViewLocation(mMapView);
 	}
+	
 	@Override
 	public void onReceiveLocation(BDLocation location) {
 		if (location == null)
@@ -48,7 +50,7 @@ public class MyLocationListener implements BDLocationListener {
 		
 		logLocationInfo(location);
 		
-		try {
+		//try {
 			mapViewLocation.setLocation(location.getLatitude(), location.getLongitude());
 			if(isFrist) {
 				mapViewLocation.setViewToLocation(location.getLatitude(), location.getLongitude());
@@ -57,9 +59,9 @@ public class MyLocationListener implements BDLocationListener {
 			mMapView.refresh();
 			
 			sendLocationInfoToServer(location);
-		} catch (Exception e) {
-			Log.e("MyLocationListener", "onReceiveLocation error! which location:" + location.toJsonString(), e);
-		}
+		//} catch (Exception e) {
+		//	Log.e("MyLocationListener", "onReceiveLocation error! which location:" + location.toJsonString(), e);
+		//}
 	}
 	
 	// 把位置信息上传到服务器上
