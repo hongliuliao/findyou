@@ -13,7 +13,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.baidu.mapapi.BMapManager;
-import com.baidu.mapapi.map.MKOfflineMap;
 import com.baidu.mapapi.map.MapController;
 import com.baidu.mapapi.map.MapView;
 import com.baidu.platform.comapi.basestruct.GeoPoint;
@@ -29,8 +28,6 @@ public class MyMapActivity extends Activity {
 	
 	BMapManager mBMapMan = null;
 	MapView mMapView = null;
-	
-	MKOfflineMap mOffline = null;   //离线地图变量
 	
 	LocationService locationService = new LocationService();
 	FriendService friendservice=new FriendService();
@@ -51,17 +48,8 @@ public class MyMapActivity extends Activity {
 		mMapController.setCenter(point);//设置地图中心点
 		mMapController.setZoom(12);//设置地图zoom级别
 		
-		//初始化离线地图
-		initOfflineMap(mMapController);
-		
 		//开启定位服务
 		locationService.start(getApplicationContext(), mMapView, getMyTelPhoneNumber());
-	}
-
-	private void initOfflineMap(MapController mMapController) {
-		mOffline = new MKOfflineMap();
-		mOffline.init(mMapController,null);
-		mOffline.scan();
 	}
 	
 	private String getMyTelPhoneNumber() {
