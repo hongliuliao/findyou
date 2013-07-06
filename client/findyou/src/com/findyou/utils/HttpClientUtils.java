@@ -46,7 +46,7 @@ public class HttpClientUtils {
 		    Log.i(TAG, "result = " + result);//获取服务器响应内容
 		    return result;
 		} catch (Exception e) {  
-			e.printStackTrace();
+			Log.e("HttpClient", "getHttpGetResult error which url:" + requestUrl, e);
 			return null;
 		}
 	} 
