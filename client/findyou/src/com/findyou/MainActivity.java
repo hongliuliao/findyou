@@ -8,7 +8,7 @@ import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.Menu;
 import android.widget.TextView;
-
+//test
 public class MainActivity extends Activity {
 
 	private static final int REQUEST_CONTACT = 1;
