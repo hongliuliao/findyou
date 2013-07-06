@@ -8,8 +8,8 @@ import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.Menu;
 import android.widget.TextView;
-
-public class MainActivity extends Activity {
+//test
+public class PhotoBookActivity extends Activity {
 
 	private static final int REQUEST_CONTACT = 1;
 	
@@ -21,8 +21,6 @@ public class MainActivity extends Activity {
         Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);  
         startActivityForResult(intent,REQUEST_CONTACT);
         Log.i(STORAGE_SERVICE, "start activity");
-        
-        
     }
     
     @Override
