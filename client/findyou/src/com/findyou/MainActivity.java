@@ -8,7 +8,6 @@ import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.Menu;
 import android.widget.TextView;
-//假如用到位置提醒功能，需要import该类
 
 public class MainActivity extends Activity {
 

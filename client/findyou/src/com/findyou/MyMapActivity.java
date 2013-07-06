@@ -49,7 +49,7 @@ public class MyMapActivity extends Activity {
 		mMapController.setZoom(12);//设置地图zoom级别
 		
 		//开启定位服务
-		//locationService.start(getApplicationContext());
+		locationService.start(getApplicationContext());
 	}
 	
 	public MyLocationOverlay getMyLocationOverlay() {
@@ -82,8 +82,6 @@ public class MyMapActivity extends Activity {
         }  
 		return super.onOptionsItemSelected(item);
 	}
-	
-	
 	
 	@Override
 	protected void onDestroy(){
