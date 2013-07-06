@@ -23,7 +23,7 @@ public class LocationServiceTest extends AndroidTestCase {
 	
 	public void testSaveUserLocaltion() {
 		LocationInfo info = new LocationInfo();
-		info.setUserId("1111");
+		info.setUserId("36");
 		info.setLatitude(39.915);
 		info.setLontitude(116.404);
 		info.setRadius(44.5f);
