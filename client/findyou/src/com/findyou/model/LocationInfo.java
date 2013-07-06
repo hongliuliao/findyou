@@ -3,6 +3,7 @@
  */
 package com.findyou.model;
 
+
 /**
  * @author Administrator
  *
@@ -12,7 +13,7 @@ public class LocationInfo {
 	/**
 	 * 用户信息唯一标示
 	 */
-	private String id;
+	private int id;
 	/**
 	 * 用户唯一标示,现在用手机号
 	 */
@@ -94,13 +95,13 @@ public class LocationInfo {
 	/**
 	 * @return the id
 	 */
-	public String getId() {
+	public int getId() {
 		return id;
 	}
 	/**
 	 * @param id the id to set
 	 */
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 	

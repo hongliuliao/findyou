@@ -47,6 +47,11 @@ public class LocationService {
     	return option;
     }
 	
+	/**
+	 * 保存用户的地理信息
+	 * @param info 用户位置信息
+	 * @return 状态码与消息
+	 */
 	public CodeMsg saveUserLocaltion(LocationInfo info) {
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("userId", info.getUserId());
