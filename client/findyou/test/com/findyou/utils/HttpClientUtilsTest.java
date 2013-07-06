@@ -16,6 +16,7 @@ import android.util.Log;
 public class HttpClientUtilsTest extends AndroidTestCase {
 
 	public HttpClientUtilsTest() {
+		
 	}
 	
 	public void testGetHttpGetResult() {
