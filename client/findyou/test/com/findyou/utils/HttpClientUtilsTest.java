@@ -16,10 +16,11 @@ import android.util.Log;
 public class HttpClientUtilsTest extends AndroidTestCase {
 
 	public HttpClientUtilsTest() {
+		
 	}
 	
 	public void testGetHttpGetResult() {
-		String requestUrl = "https://raw.github.com/hongliuliao/findyou/master/client/findyou/test/saveMyInfo.json";
+		String requestUrl = "https://raw.github.com/hongliuliao/findyou/master/client/findyou/test/getFriendInfo.json";
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("id", "111");
 		params.put("userId", "222");

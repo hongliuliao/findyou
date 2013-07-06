@@ -21,8 +21,6 @@ public class PhotoBookActivity extends Activity {
         Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);  
         startActivityForResult(intent,REQUEST_CONTACT);
         Log.i(STORAGE_SERVICE, "start activity");
-        
-        
     }
     
     @Override

@@ -14,7 +14,9 @@ import com.baidu.mapapi.BMapManager;
 import com.baidu.mapapi.map.MapController;
 import com.baidu.mapapi.map.MapView;
 import com.baidu.platform.comapi.basestruct.GeoPoint;
+import com.findyou.service.FriendService;
 import com.findyou.service.LocationService;
+
 
 /**
  * @author Administrator
@@ -26,7 +28,7 @@ public class MyMapActivity extends Activity {
 	MapView mMapView = null;
 	
 	LocationService locationService = new LocationService();
-	
+	FriendService friendservice=new FriendService();
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -94,5 +96,13 @@ public class MyMapActivity extends Activity {
 	        }
 	       super.onResume();
 	}
-
+	
+	@Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+		super.onActivityResult(requestCode, resultCode, data);  
+		String []rest=friendservice.getFriendResult(1).split(";");
+		GeoPoint point =new GeoPoint(Integer.parseInt(rest[2].substring(9)),Integer.parseInt(rest[3].substring(10)));
+	}
+	
+	
 }
