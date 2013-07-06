@@ -21,6 +21,8 @@ public class HttpClientUtilsTest extends AndroidTestCase {
 	public void testGetHttpGetResult() {
 		String requestUrl = "https://raw.github.com/hongliuliao/findyou/master/client/findyou/test/saveMyInfo.json";
 		Map<String, String> params = new HashMap<String, String>();
+		params.put("id", "111");
+		params.put("userId", "222");
 		String result = HttpClientUtils.getHttpGetResult(requestUrl, params);
 		Log.i("test", result);
 		assertTrue(result != null);
