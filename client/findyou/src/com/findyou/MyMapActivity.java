@@ -24,9 +24,15 @@ import com.baidu.platform.comapi.basestruct.GeoPoint;
 import com.findyou.model.LocationInfo;
 import com.findyou.model.MapViewLocation;
 import com.findyou.server.FindyouApplication;
+import com.findyou.service.IPhoneService;
 import com.findyou.service.LocationService;
+import com.findyou.service.PhoneService;
+import com.findyou.service.UserService;
 
 import com.findyou.data.*;
+
+import domain.businessEntity.userinfo.UserInfo;
+
 
 
 
@@ -36,9 +42,10 @@ import com.findyou.data.*;
  *
  */
 public class MyMapActivity extends Activity {
-
+	public PhoneService phoneservice;
 	public static DataHelper DATAHELPER;
 	public String DATAFILENAME="myPhone.db";
+	
 	BMapManager mBMapMan = null;
 	MapView mMapView = null;
 	
@@ -70,6 +77,7 @@ public class MyMapActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		DATAHELPER=new DataHelper(getApplicationContext(), DATAFILENAME);
 		mBMapMan=new BMapManager(getApplication());
 		mBMapMan.init("EB21E59591611451362F228A82E72CA98AEDC437", null);  
 		//注意：请在试用setContentView前初始化BMapManager对象，否则会报错
@@ -88,7 +96,10 @@ public class MyMapActivity extends Activity {
 		//开启定位服务
 		this.showMessage(getMyTelPhoneNumber());
 		locationService.start(getApplicationContext(), mMapView, getMyTelPhoneNumber());
-		
+		phoneservice=new PhoneService();
+		UserInfo test=new UserInfo();
+		test.setPhoneNumber("123456");
+		phoneservice.saveUserInfo(test);
 	}
 	
 	private void startGetFriendLocation(final String phoneNumber) {
