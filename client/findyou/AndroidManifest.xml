@@ -57,13 +57,17 @@
             android:name="com.findyou.MyMapActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="sensor" >
-            <intent-filter>
+
+        </activity>
+		<activity android:name="com.findyou.WelcomeActivity"
+		    		   android:configChanges="orientation|keyboardHidden"
+		    		   android:screenOrientation="sensor" >
+		    <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-
+		</activity>
         <service
             android:name="com.baidu.location.f"
             android:enabled="true"

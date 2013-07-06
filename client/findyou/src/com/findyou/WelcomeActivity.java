@@ -1,0 +1,57 @@
+package com.findyou;
+
+import android.os.Bundle;
+import android.app.Activity;
+import android.content.Intent;
+import android.view.Menu;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.Animation.AnimationListener;
+import android.widget.ImageView;
+
+public class WelcomeActivity extends Activity {
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_welcome);
+		
+		ImageView img= (ImageView)findViewById(R.id.img_welcome);
+		
+		AlphaAnimation alphaAnimation = new AlphaAnimation(1.0f, 0.0f);
+		alphaAnimation.setDuration(2000);
+		
+		alphaAnimation.setAnimationListener(new AnimationListener() {
+			
+			@Override
+			public void onAnimationEnd(Animation arg0) {
+				// TODO Auto-generated method stub
+				Intent intent = new Intent(WelcomeActivity.this,MyMapActivity.class);
+				startActivity(intent);
+				finish();
+			}
+
+			@Override
+			public void onAnimationRepeat(Animation arg0) {
+				// TODO 自动生成的方法存根
+				
+			}
+
+			@Override
+			public void onAnimationStart(Animation arg0) {
+				// TODO 自动生成的方法存根
+				
+			}
+		});
+		img.setAnimation(alphaAnimation);
+		
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.main, menu);
+		return true;
+	}
+
+}
