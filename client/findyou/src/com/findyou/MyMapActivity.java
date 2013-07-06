@@ -3,12 +3,15 @@
  */
 package com.findyou;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Looper;
+import android.os.Message;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.Menu;
@@ -20,7 +23,6 @@ import com.baidu.mapapi.map.MapView;
 import com.baidu.platform.comapi.basestruct.GeoPoint;
 import com.findyou.model.LocationInfo;
 import com.findyou.model.MapViewLocation;
-import com.findyou.service.FriendService;
 import com.findyou.service.LocationService;
 
 
@@ -34,9 +36,28 @@ public class MyMapActivity extends Activity {
 	MapView mMapView = null;
 	
 	LocationService locationService = new LocationService();
-	FriendService friendservice=new FriendService();
 	
 	MapViewLocation mapViewLocation;
+	
+	private final static int SHOW_FRIEND = 1;
+	
+	private static String FRIEND_LATITUDE = "FRIEND_LATITUDE";
+	private static String FRIEND_LONTITUDE = "FRIEND_LONTITUDE";
+	
+	@SuppressLint("HandlerLeak")
+	private Handler mHandler = new Handler(){  
+        
+        public void handleMessage(Message msg) {  
+            switch (msg.what) {  
+            case SHOW_FRIEND:  
+            	double latitude = msg.getData().getDouble(FRIEND_LATITUDE);
+            	double lontitude = msg.getData().getDouble(FRIEND_LONTITUDE);
+            	mapViewLocation.setLocation(latitude, lontitude);
+    			mapViewLocation.reflush();
+    			break;
+            }  
+        };  
+    };
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -83,8 +104,11 @@ public class MyMapActivity extends Activity {
     				Looper.loop();
     				return;
     			}
-    			mapViewLocation.setLocation(info.getLatitude(), info.getLontitude());
-    			mapViewLocation.reflush();
+    			Message msg = new Message();
+    			msg.what = SHOW_FRIEND;
+    			msg.getData().putDouble(FRIEND_LATITUDE, info.getLatitude());
+    			msg.getData().putDouble(FRIEND_LONTITUDE, info.getLontitude());
+    			mHandler.sendMessage(msg);
     		}
     	}.start();
     }
@@ -144,13 +168,5 @@ public class MyMapActivity extends Activity {
 	        }
 	       super.onResume();
 	}
-	
-	@Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data){
-		super.onActivityResult(requestCode, resultCode, data);  
-		String []rest=friendservice.getFriendResult(1).split(";");
-		GeoPoint point =new GeoPoint(Integer.parseInt(rest[2].substring(9)),Integer.parseInt(rest[3].substring(10)));
-	}
-	
-	
+
 }
