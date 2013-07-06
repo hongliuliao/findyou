@@ -4,9 +4,11 @@
 package com.findyou;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Looper;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.Menu;
@@ -69,16 +71,27 @@ public class MyMapActivity extends Activity {
 	
 	private void startGetFriendLocation(final String phoneNumber) {
     	
+		
     	new Thread() {
     		
     		@Override
     		public void run() {
     			LocationInfo info = locationService.getUserLocation(phoneNumber);
+    			if(info == null) {
+    				Looper.prepare();
+    				showMessage("该好友信息不存在,请确定TA在线上!");
+    				Looper.loop();
+    				return;
+    			}
     			mapViewLocation.setLocation(info.getLatitude(), info.getLontitude());
     			mapViewLocation.reflush();
     		}
     	}.start();
     }
+	
+	private void showMessage(String message) {
+		new AlertDialog.Builder(MyMapActivity.this).setTitle("提示").setMessage(message).setPositiveButton("确定", null).show();
+	}
 	
 	private String getMyTelPhoneNumber() {
 		TelephonyManager tm = (TelephonyManager) this.getSystemService(Context.TELEPHONY_SERVICE);
