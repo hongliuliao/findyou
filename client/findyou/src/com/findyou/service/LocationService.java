@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
@@ -53,6 +54,7 @@ public class LocationService {
 	 * @return ×´Ì¬ÂëÓëÏûÏ¢
 	 */
 	public CodeMsg saveUserLocaltion(LocationInfo info) {
+		Log.i("LocationInfoService", "start saveUserLocaltion which info:" + info);
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("userId", info.getUserId());
 		params.put("latitude", info.getLatitude() + "");
