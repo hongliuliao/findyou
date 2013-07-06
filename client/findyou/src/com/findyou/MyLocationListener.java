@@ -7,12 +7,25 @@ import android.util.Log;
 
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
+import com.baidu.mapapi.map.MapView;
+import com.baidu.mapapi.map.MyLocationOverlay;
+import com.findyou.utils.LayerUtils;
 
 /**
  * @author Administrator
  *
  */
 public class MyLocationListener implements BDLocationListener {
+	
+	private MapView mMapView;
+	
+	/**
+	 * @param mMapView
+	 */
+	public MyLocationListener(MapView mMapView) {
+		super();
+		this.mMapView = mMapView;
+	}
 	@Override
 	public void onReceiveLocation(BDLocation location) {
 		if (location == null)
@@ -37,7 +50,9 @@ public class MyLocationListener implements BDLocationListener {
 			sb.append("\naddr : ");
 			sb.append(location.getAddrStr());
 		} 
- 
+		MyLocationOverlay myOverlay = LayerUtils.getMyLocationOverlay(mMapView, location.getLatitude(), location.getLongitude());
+		mMapView.getOverlays().add(myOverlay);
+		mMapView.refresh();
 		Log.i("Location", sb.toString());
 	}
 	public void onReceivePoi(BDLocation poiLocation) {
