@@ -28,6 +28,8 @@ public class MyLocationListener implements BDLocationListener {
 	
 	private String myTelphoneNumber;
 	
+	private MyLocationOverlay lastMyOverlay;
+	
 	/**
 	 * @param mMapView
 	 */
@@ -45,6 +47,10 @@ public class MyLocationListener implements BDLocationListener {
 		
 		MyLocationOverlay myOverlay = LayerUtils.getMyLocationOverlay(mMapView, location.getLatitude(), location.getLongitude());
 		try {
+			if(lastMyOverlay != null) {
+				mMapView.getOverlays().remove(lastMyOverlay);
+			}
+			lastMyOverlay = myOverlay;
 			mMapView.getOverlays().add(myOverlay);
 			
 			setViewToLocation(location.getLatitude(), location.getLongitude());
