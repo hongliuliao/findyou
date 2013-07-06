@@ -3,9 +3,12 @@
  */
 package com.findyou.server;
 
-import com.findyou.service.UserService;
-
 import android.app.Application;
+import android.content.Context;
+import android.telephony.TelephonyManager;
+
+import com.findyou.service.PhoneService;
+import com.findyou.utils.StringUtils;
 
 /**
  * @author Administrator
@@ -13,7 +16,7 @@ import android.app.Application;
  */
 public class FindyouApplication extends Application {
 
-	private UserService userService = new UserService();
+	private PhoneService phoneService = new PhoneService();
 	
 	public String friendPhoneNum;
 	
@@ -23,8 +26,19 @@ public class FindyouApplication extends Application {
 	 * @return the myPhoneNum
 	 */
 	public String getMyPhoneNum() {
-		// TODO 从userService中获取数据
-		return myPhoneNum;
+		if(StringUtils.isNotBlank(myPhoneNum)) {
+			return myPhoneNum;
+		}
+		String myPhoneNum = getMyTelPhoneNumber();
+		if(StringUtils.isNotBlank(myPhoneNum)) {
+			return myPhoneNum;
+		}
+		return this.phoneService.getUserInfo(1).getPhoneNumber();// 1表示手机号
+	}
+	
+	private String getMyTelPhoneNumber() {
+		TelephonyManager tm = (TelephonyManager) this.getSystemService(Context.TELEPHONY_SERVICE);
+		return tm.getLine1Number();
 	}
 
 	public boolean hasMyPhoneNum() {

@@ -6,14 +6,12 @@ package com.findyou;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,12 +21,13 @@ import com.baidu.mapapi.BMapManager;
 import com.baidu.mapapi.map.MapController;
 import com.baidu.mapapi.map.MapView;
 import com.baidu.platform.comapi.basestruct.GeoPoint;
+import com.findyou.data.DataHelper;
 import com.findyou.model.LocationInfo;
 import com.findyou.model.MapViewLocation;
 import com.findyou.server.FindyouApplication;
 import com.findyou.service.LocationService;
-
-import com.findyou.data.*;
+import com.findyou.service.PhoneService;
+import com.findyou.utils.StringUtils;
 
 
 
@@ -45,6 +44,8 @@ public class MyMapActivity extends Activity {
 	MapView mMapView = null;
 	
 	LocationService locationService = new LocationService();
+	
+	PhoneService phoneService = new PhoneService();
 	
 	MapViewLocation mapViewLocation;
 	
@@ -87,19 +88,18 @@ public class MyMapActivity extends Activity {
 		mMapController.setCenter(point);//设置地图中心点
 		mMapController.setZoom(12);//设置地图zoom级别
 		
-		String phoneNumber = getMyTelPhoneNumber();
+		FindyouApplication app = (FindyouApplication) this.getApplication();
+		String phoneNumber = app.getMyPhoneNum();
 		if(phoneNumber == null || phoneNumber.trim().equals("")) {
 			this.showMessage("查询不到您的手机号,请在菜单中设置手机号,方便你的朋友找到你!");
 		}
 		//开启定位服务
-		this.showMessage(getMyTelPhoneNumber());
-		locationService.start(getApplicationContext(), mMapView, getMyTelPhoneNumber());
+		locationService.start(getApplicationContext(), mMapView, phoneNumber);
 		
 	}
 	
 	private void startGetFriendLocation(final String phoneNumber) {
     	
-		
     	new Thread() {
     		
     		@Override
@@ -124,11 +124,7 @@ public class MyMapActivity extends Activity {
 		new AlertDialog.Builder(MyMapActivity.this).setTitle("提示").setMessage(message).setPositiveButton("确定", null).show();
 	}
 	
-	private String getMyTelPhoneNumber() {
-		// TODO 换成UserService
-		TelephonyManager tm = (TelephonyManager) this.getSystemService(Context.TELEPHONY_SERVICE);
-		return tm.getLine1Number();
-	}
+	
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -153,7 +149,12 @@ public class MyMapActivity extends Activity {
         	builder.setNegativeButton("确定", new DialogInterface.OnClickListener() {
 
                 public void onClick(DialogInterface dialog, int which) {
-                	// TODO 保存用户手机号
+                	String phoneNum = inputPhoneNum.getText().toString();
+                	if(StringUtils.isBlank(phoneNum)) {
+                		return;
+                	}
+                	FindyouApplication app = (FindyouApplication) getApplication();
+                	app.setMyPhoneNum(phoneNum);
                 }
             });
         	builder.setPositiveButton("取消", null);
