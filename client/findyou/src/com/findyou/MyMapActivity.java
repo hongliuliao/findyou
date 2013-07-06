@@ -54,6 +54,7 @@ public class MyMapActivity extends Activity {
             	double latitude = msg.getData().getDouble(FRIEND_LATITUDE);
             	double lontitude = msg.getData().getDouble(FRIEND_LONTITUDE);
             	mapViewLocation.setLocation(latitude, lontitude);
+            	mapViewLocation.setViewToLocation(latitude, lontitude);
     			mapViewLocation.reflush();
     			break;
             }  

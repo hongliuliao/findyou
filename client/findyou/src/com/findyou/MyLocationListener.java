@@ -7,9 +7,7 @@ import android.util.Log;
 
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
-import com.baidu.mapapi.map.MapController;
 import com.baidu.mapapi.map.MapView;
-import com.baidu.platform.comapi.basestruct.GeoPoint;
 import com.findyou.model.CodeMsg;
 import com.findyou.model.LocationInfo;
 import com.findyou.model.MapViewLocation;
@@ -32,6 +30,8 @@ public class MyLocationListener implements BDLocationListener {
 	
 	private MapViewLocation mapViewLocation;
 	
+	private boolean isFrist = true;
+	
 	/**
 	 * @param mMapView
 	 */
@@ -50,7 +50,10 @@ public class MyLocationListener implements BDLocationListener {
 		
 		try {
 			mapViewLocation.setLocation(location.getLatitude(), location.getLongitude());
-			setViewToLocation(location.getLatitude(), location.getLongitude());
+			if(isFrist) {
+				mapViewLocation.setViewToLocation(location.getLatitude(), location.getLongitude());
+				isFrist = false;
+			}
 			mMapView.refresh();
 			
 			sendLocationInfoToServer(location);
@@ -111,19 +114,6 @@ public class MyLocationListener implements BDLocationListener {
 			sb.append(location.getAddrStr());
 		} 
 		Log.i("Location", sb.toString());
-	}
-	
-	/**
-	 * 把视野定位到当前所在位置
-	 * @param latitude
-	 * @param longitude
-	 */
-	private void setViewToLocation(double latitude, double longitude) {
-		MapController mMapController=mMapView.getController();
-		// 得到mMapView的控制权,可以用它控制和驱动平移和缩放
-		GeoPoint point =new GeoPoint((int)(latitude* 1E6),(int)(longitude* 1E6));
-		//用给定的经纬度构造一个GeoPoint，单位是微度 (度 * 1E6)
-		mMapController.setCenter(point);//设置地图中心点
 	}
 	
 	public void onReceivePoi(BDLocation poiLocation) {
