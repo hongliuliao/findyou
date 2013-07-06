@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.baidu.mapapi.BMapManager;
 import com.baidu.mapapi.map.MapController;
@@ -45,8 +46,6 @@ public class MyMapActivity extends Activity {
 	
 	LocationService locationService = new LocationService();
 	
-	PhoneService phoneService = new PhoneService();
-	
 	MapViewLocation mapViewLocation;
 	
 	private final static int SHOW_FRIEND = 1;
@@ -75,7 +74,7 @@ public class MyMapActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		DATAHELPER=new DataHelper(getApplicationContext(), DATAFILENAME);
 		mBMapMan=new BMapManager(getApplication());
-		mBMapMan.init("EB21E59591611451362F228A82E72CA98AEDC437", null);  
+		mBMapMan.init("EB21E59591611451362F228A82E72CA98AEDC437", null); 
 		//注意：请在试用setContentView前初始化BMapManager对象，否则会报错
 		setContentView(R.layout.activity_map);
 		mMapView=(MapView)findViewById(R.id.bmapView);
@@ -144,6 +143,9 @@ public class MyMapActivity extends Activity {
             break;  
         case 2:
         	final EditText inputPhoneNum = new EditText(this);
+        	FindyouApplication app = (FindyouApplication) getApplication();
+        	inputPhoneNum.setText(app.getMyPhoneNum());
+        	
         	AlertDialog.Builder builder = new AlertDialog.Builder(this);
         	builder.setTitle("请输入手机号").setIcon(android.R.drawable.ic_dialog_info).setView(inputPhoneNum);
         	builder.setNegativeButton("确定", new DialogInterface.OnClickListener() {
@@ -155,6 +157,7 @@ public class MyMapActivity extends Activity {
                 	}
                 	FindyouApplication app = (FindyouApplication) getApplication();
                 	app.setMyPhoneNum(phoneNum);
+                	Toast.makeText(getApplicationContext(), "操作成功!", Toast.LENGTH_SHORT).show();
                 }
             });
         	builder.setPositiveButton("取消", null);

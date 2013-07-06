@@ -18,8 +18,6 @@ import domain.businessEntity.userinfo.UserInfo;
  */
 public class FindyouApplication extends Application {
 
-	private PhoneService phoneService = new PhoneService();
-	
 	public String friendPhoneNum;
 	
 	private String myPhoneNum;
@@ -35,7 +33,7 @@ public class FindyouApplication extends Application {
 		if(StringUtils.isNotBlank(myPhoneNum)) {
 			return myPhoneNum;
 		}
-		return this.phoneService.getUserInfo(1).getPhoneNumber();// 1表示手机号
+		return new PhoneService().getUserInfo(1).getPhoneNumber();// 1表示手机号
 	}
 	
 	private String getMyTelPhoneNumber() {
@@ -54,7 +52,7 @@ public class FindyouApplication extends Application {
 	public void setMyPhoneNum(String myPhoneNum) {
 		UserInfo userInfo=new UserInfo();
 		userInfo.setPhoneNumber(myPhoneNum);
-		phoneService.saveUserInfo(userInfo);
+		new PhoneService().saveUserInfo(userInfo);
 		this.myPhoneNum = myPhoneNum;
 	}
 
