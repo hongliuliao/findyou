@@ -28,13 +28,19 @@ import com.findyou.model.MapViewLocation;
 import com.findyou.server.FindyouApplication;
 import com.findyou.service.LocationService;
 
+import com.findyou.data.*;
+
+
+
 
 /**
  * @author Administrator
  *
  */
 public class MyMapActivity extends Activity {
-	
+
+	public static DataHelper DATAHELPER;
+	public String DATAFILENAME="myApp.db";
 	BMapManager mBMapMan = null;
 	MapView mMapView = null;
 	
@@ -86,6 +92,7 @@ public class MyMapActivity extends Activity {
 			this.showMessage("查询不到您的手机号,请在菜单中设置手机号,方便你的朋友找到你!");
 		}
 		//开启定位服务
+		this.showMessage(getMyTelPhoneNumber());
 		locationService.start(getApplicationContext(), mMapView, getMyTelPhoneNumber());
 		
 	}

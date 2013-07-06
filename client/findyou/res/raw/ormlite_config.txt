@@ -1,0 +1,18 @@
+#
+# generated on 2013/07/06 11:47:56
+#
+# --table-start--
+dataClass=domain.businessEntity.userinfo.UserInfo
+tableName=T_User
+# --table-fields-start--
+# --field-start--
+fieldName=userID
+generatedId=true
+# --field-end--
+# --field-start--
+fieldName=phoneNumber
+canBeNull=false
+# --field-end--
+# --table-fields-end--
+# --table-end--
+#################################
