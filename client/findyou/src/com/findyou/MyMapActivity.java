@@ -23,6 +23,7 @@ import com.baidu.mapapi.map.MapView;
 import com.baidu.platform.comapi.basestruct.GeoPoint;
 import com.findyou.model.LocationInfo;
 import com.findyou.model.MapViewLocation;
+import com.findyou.server.FindyouApplication;
 import com.findyou.service.LocationService;
 
 
@@ -80,14 +81,6 @@ public class MyMapActivity extends Activity {
 		//开启定位服务
 		locationService.start(getApplicationContext(), mMapView, getMyTelPhoneNumber());
 		
-		//如果有好友
-		Intent intent = getIntent();
-		if(intent != null) {
-			String photoNumber = intent.getStringExtra("phoneNumber");
-			if(photoNumber != null) {
-				startGetFriendLocation(photoNumber);
-			}
-		}
 	}
 	
 	private void startGetFriendLocation(final String phoneNumber) {
@@ -136,7 +129,6 @@ public class MyMapActivity extends Activity {
             Intent intent = new Intent();
             intent.setClass(this, PhotoBookActivity.class);
             startActivity(intent);
-            this.finish();
             break;  
         default:  
             break;  
@@ -163,11 +155,17 @@ public class MyMapActivity extends Activity {
 	}
 	@Override
 	protected void onResume(){
-	        mMapView.onResume();
-	        if(mBMapMan!=null){
-	                mBMapMan.start();
-	        }
-	       super.onResume();
+		//如果有好友
+		FindyouApplication application = (FindyouApplication) this.getApplication();
+		String photoNumber = application.getFriendPhoneNum();
+		if(photoNumber != null) {
+			startGetFriendLocation(photoNumber);
+		}
+        mMapView.onResume();
+        if(mBMapMan!=null){
+            mBMapMan.start();
+        }
+       super.onResume();
 	}
 
 }

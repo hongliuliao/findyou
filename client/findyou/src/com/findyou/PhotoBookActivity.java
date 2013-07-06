@@ -1,5 +1,7 @@
 package com.findyou;
 
+import com.findyou.server.FindyouApplication;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
@@ -48,10 +50,8 @@ public class PhotoBookActivity extends Activity {
         String phoneNumber = getPhoneNumber(contactId);  
         textView.setText(textView.getText() + phoneNumber);
         
-        Intent intent = new Intent();
-        intent.setClass(this, MyMapActivity.class);
-        intent.putExtra("phoneNumber", phoneNumber);
-        startActivity(intent);
+        FindyouApplication application = (FindyouApplication) this.getApplication();
+        application.setFriendPhoneNum(phoneNumber);
         this.finish();
     }
     
