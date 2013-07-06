@@ -3,12 +3,19 @@
  */
 package com.findyou.service;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import android.content.Context;
 
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.map.MapView;
 import com.findyou.MyLocationListener;
+import com.findyou.model.CodeMsg;
+import com.findyou.model.LocationInfo;
+import com.findyou.utils.HttpClientUtils;
+import com.findyou.utils.JsonUtils;
 
 /**
  * @author Administrator
@@ -16,6 +23,8 @@ import com.findyou.MyLocationListener;
  */
 public class LocationService {
 
+	private static final String SAVE_LOCATION_URL = "https://raw.github.com/hongliuliao/findyou/master/client/findyou/test/saveMyInfo.json";
+	
 	public LocationClient mLocationClient = null;
 	
 	public void start(Context context, MapView mMapView) {
@@ -38,5 +47,16 @@ public class LocationService {
     	return option;
     }
 	
+	public CodeMsg saveUserLocaltion(LocationInfo info) {
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("userId", info.getUserId());
+		params.put("latitude", info.getLatitude() + "");
+		params.put("lontitude", info.getLontitude() + "");
+		params.put("radius", info.getRadius() + "");
+		params.put("addr", info.getAddr() + "");
+		
+		String result = HttpClientUtils.getHttpGetResult(SAVE_LOCATION_URL, params);
+		return JsonUtils.toCodeMsg(result);
+	}
 	
 }
