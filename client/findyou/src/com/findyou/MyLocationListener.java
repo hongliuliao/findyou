@@ -44,7 +44,6 @@ public class MyLocationListener implements BDLocationListener {
 		logLocationInfo(location);
 		
 		MyLocationOverlay myOverlay = LayerUtils.getMyLocationOverlay(mMapView, location.getLatitude(), location.getLongitude());
-		mMapView.getOverlays().clear();
 		mMapView.getOverlays().add(myOverlay);
 		
 		setViewToLocation(location.getLatitude(), location.getLongitude());

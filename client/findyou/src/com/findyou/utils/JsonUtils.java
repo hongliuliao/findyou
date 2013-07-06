@@ -16,6 +16,9 @@ public class JsonUtils {
 
 	public static CodeMsg toCodeMsg(String result) {
 		try {
+			if(result == null) {
+				return new CodeMsg(1, "result is null");
+			}
 			JSONObject json = new JSONObject(result);
 			return new CodeMsg(json.getInt("code"), json.getString("msg"));
 		} catch (Exception e) {
