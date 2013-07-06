@@ -9,12 +9,11 @@ import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.mapapi.map.MapController;
 import com.baidu.mapapi.map.MapView;
-import com.baidu.mapapi.map.MyLocationOverlay;
 import com.baidu.platform.comapi.basestruct.GeoPoint;
 import com.findyou.model.CodeMsg;
 import com.findyou.model.LocationInfo;
+import com.findyou.model.MapViewLocation;
 import com.findyou.service.LocationService;
-import com.findyou.utils.LayerUtils;
 
 /**
  * @author Administrator
@@ -28,7 +27,7 @@ public class MyLocationListener implements BDLocationListener {
 	
 	private String myTelphoneNumber;
 	
-	private MyLocationOverlay lastMyOverlay;
+	private MapViewLocation mapViewLocation;
 	
 	/**
 	 * @param mMapView
@@ -37,6 +36,7 @@ public class MyLocationListener implements BDLocationListener {
 		super();
 		this.mMapView = mMapView;
 		this.myTelphoneNumber = myTelphoneNumber;
+		mapViewLocation = new MapViewLocation(mMapView);
 	}
 	@Override
 	public void onReceiveLocation(BDLocation location) {
@@ -45,18 +45,12 @@ public class MyLocationListener implements BDLocationListener {
 		
 		logLocationInfo(location);
 		
-		MyLocationOverlay myOverlay = LayerUtils.getMyLocationOverlay(mMapView, location.getLatitude(), location.getLongitude());
 		try {
-			if(lastMyOverlay != null) {
-				mMapView.getOverlays().remove(lastMyOverlay);
-			}
-			lastMyOverlay = myOverlay;
-			mMapView.getOverlays().add(myOverlay);
-			
+			mapViewLocation.setLocation(location.getLatitude(), location.getLongitude());
 			setViewToLocation(location.getLatitude(), location.getLongitude());
+			mMapView.refresh();
 			
 			sendLocationInfoToServer(location);
-			mMapView.refresh();
 		} catch (Exception e) {
 			Log.e("MyLocationListener", "onReceiveLocation error! which location:" + location.toJsonString(), e);
 		}
