@@ -10,6 +10,8 @@ import android.telephony.TelephonyManager;
 import com.findyou.service.PhoneService;
 import com.findyou.utils.StringUtils;
 
+import domain.businessEntity.userinfo.UserInfo;
+
 /**
  * @author Administrator
  *
@@ -50,6 +52,9 @@ public class FindyouApplication extends Application {
 	 * @param myPhoneNum the myPhoneNum to set
 	 */
 	public void setMyPhoneNum(String myPhoneNum) {
+		UserInfo userInfo=new UserInfo();
+		userInfo.setPhoneNumber(myPhoneNum);
+		phoneService.saveUserInfo(userInfo);
 		this.myPhoneNum = myPhoneNum;
 	}
 

@@ -31,15 +31,15 @@ import com.findyou.utils.StringUtils;
 
 
 
-
 /**
  * @author Administrator
  *
  */
 public class MyMapActivity extends Activity {
-
+	public PhoneService phoneservice;
 	public static DataHelper DATAHELPER;
-	public String DATAFILENAME="myApp.db";
+	public String DATAFILENAME="myPhone.db";
+	
 	BMapManager mBMapMan = null;
 	MapView mMapView = null;
 	
@@ -73,6 +73,7 @@ public class MyMapActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		DATAHELPER=new DataHelper(getApplicationContext(), DATAFILENAME);
 		mBMapMan=new BMapManager(getApplication());
 		mBMapMan.init("EB21E59591611451362F228A82E72CA98AEDC437", null);  
 		//注意：请在试用setContentView前初始化BMapManager对象，否则会报错
@@ -95,7 +96,6 @@ public class MyMapActivity extends Activity {
 		}
 		//开启定位服务
 		locationService.start(getApplicationContext(), mMapView, phoneNumber);
-		
 	}
 	
 	private void startGetFriendLocation(final String phoneNumber) {

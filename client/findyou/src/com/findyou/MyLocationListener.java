@@ -3,7 +3,6 @@
  */
 package com.findyou;
 
-import android.app.AlertDialog;
 import android.util.Log;
 
 import com.baidu.location.BDLocation;
