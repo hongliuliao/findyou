@@ -41,6 +41,9 @@ public class JsonUtils {
 	public static LocationInfo toLocationInfo(String jsonInfo) {
 			try {
 				JSONObject jsonObject = new JSONObject(jsonInfo);
+				if(jsonInfo.trim().equals("{}")) {
+					return null;
+				}
 				LocationInfo info = new LocationInfo();
 				
 				info.setId(jsonObject.getInt("id"));

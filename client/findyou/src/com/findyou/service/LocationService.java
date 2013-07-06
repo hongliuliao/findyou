@@ -26,6 +26,8 @@ public class LocationService {
 
 	private static final String SAVE_LOCATION_URL = "https://raw.github.com/hongliuliao/findyou/master/client/findyou/test/saveMyInfo.json";
 	
+	private static final String GET_LOCATION_URL = "http://iamhere1.duapp.com/getAddr.jsp";
+	
 	public LocationClient mLocationClient = null;
 	
 	public void start(Context context, MapView mMapView, String myTelphoneNumber) {
@@ -64,6 +66,13 @@ public class LocationService {
 		
 		String result = HttpClientUtils.getHttpGetResult(SAVE_LOCATION_URL, params);
 		return JsonUtils.toCodeMsg(result);
+	}
+	
+	public LocationInfo getUserLocation(String phoneNumber) {
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("phoneNum", phoneNumber);
+		String result = HttpClientUtils.getHttpGetResult(GET_LOCATION_URL, params);
+		return JsonUtils.toLocationInfo(result);
 	}
 	
 }

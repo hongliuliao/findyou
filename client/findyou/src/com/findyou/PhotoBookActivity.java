@@ -47,8 +47,13 @@ public class PhotoBookActivity extends Activity {
         
         String phoneNumber = getPhoneNumber(contactId);  
         textView.setText(textView.getText() + phoneNumber);
+        
+        Intent intent = new Intent();
+        intent.setClass(this, MyMapActivity.class);
+        intent.putExtra("phoneNumber", phoneNumber);
+        startActivity(intent);
     }
-
+    
 	private String getPhoneNumber(String contactId) {
 		String phoneNumber = null;
 		Cursor phone = getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,   

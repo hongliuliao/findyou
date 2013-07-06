@@ -16,6 +16,8 @@ import com.baidu.mapapi.BMapManager;
 import com.baidu.mapapi.map.MapController;
 import com.baidu.mapapi.map.MapView;
 import com.baidu.platform.comapi.basestruct.GeoPoint;
+import com.findyou.model.LocationInfo;
+import com.findyou.model.MapViewLocation;
 import com.findyou.service.FriendService;
 import com.findyou.service.LocationService;
 
@@ -31,6 +33,9 @@ public class MyMapActivity extends Activity {
 	
 	LocationService locationService = new LocationService();
 	FriendService friendservice=new FriendService();
+	
+	MapViewLocation mapViewLocation;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -40,6 +45,7 @@ public class MyMapActivity extends Activity {
 		setContentView(R.layout.activity_map);
 		mMapView=(MapView)findViewById(R.id.bmapView);
 		mMapView.setBuiltInZoomControls(true);
+		mapViewLocation = new MapViewLocation(mMapView);
 		//设置启用内置的缩放控件
 		MapController mMapController=mMapView.getController();
 		// 得到mMapView的控制权,可以用它控制和驱动平移和缩放
@@ -50,7 +56,29 @@ public class MyMapActivity extends Activity {
 		
 		//开启定位服务
 		locationService.start(getApplicationContext(), mMapView, getMyTelPhoneNumber());
+		
+		//如果有好友
+		Intent intent = getIntent();
+		if(intent != null) {
+			String photoNumber = intent.getStringExtra("phoneNumber");
+			if(photoNumber != null) {
+				startGetFriendLocation(photoNumber);
+			}
+		}
 	}
+	
+	private void startGetFriendLocation(final String phoneNumber) {
+    	
+    	new Thread() {
+    		
+    		@Override
+    		public void run() {
+    			LocationInfo info = locationService.getUserLocation(phoneNumber);
+    			mapViewLocation.setLocation(info.getLatitude(), info.getLontitude());
+    			mapViewLocation.reflush();
+    		}
+    	}.start();
+    }
 	
 	private String getMyTelPhoneNumber() {
 		TelephonyManager tm = (TelephonyManager) this.getSystemService(Context.TELEPHONY_SERVICE);
