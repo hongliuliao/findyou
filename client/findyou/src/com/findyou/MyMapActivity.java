@@ -38,7 +38,7 @@ import com.findyou.data.*;
 public class MyMapActivity extends Activity {
 
 	public static DataHelper DATAHELPER;
-	public String DATAFILENAME="myApp.db";
+	public String DATAFILENAME="myPhone.db";
 	BMapManager mBMapMan = null;
 	MapView mMapView = null;
 	

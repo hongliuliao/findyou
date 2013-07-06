@@ -14,9 +14,15 @@ public class UserInfo {
 	public UserInfo() {
 		// ORMLite needs a no-arg constructor
 	}
-	
+	public void setUserID(int id){
+		this.userID=id;
+	}
 	public int getUserID(){
 		return this.userID;
+	}
+	
+	public void setPhoneNumber(String phone){
+		this.phoneNumber=phone;
 	}
 	public String getPhoneNumber(){
 		return this.phoneNumber;
