@@ -26,6 +26,18 @@ public class JsonUtils {
 		}
 	}
 	
+	public static String getStringValue(String result, String key) {
+		try {
+			if(result == null) {
+				return null;
+			}
+			JSONObject json = new JSONObject(result);
+			return json.getString("id");
+		} catch (Exception e) {
+			throw new RuntimeException("getLongValue error which result:" + result, e);
+		}
+	}
+	
 	/**
 	 * 转换json为对象
 	 * @param jsonInfo LocationInfo json 形式 

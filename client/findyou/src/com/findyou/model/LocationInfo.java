@@ -15,7 +15,7 @@ public class LocationInfo {
 	 */
 	private int id;
 	/**
-	 * 用户唯一标示,现在用手机号
+	 * 用户唯一标示
 	 */
 	private String userId;
 	

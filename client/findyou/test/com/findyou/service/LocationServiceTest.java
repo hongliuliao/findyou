@@ -5,6 +5,7 @@ package com.findyou.service;
 
 import android.test.AndroidTestCase;
 
+import com.findyou.model.CodeMsg;
 import com.findyou.model.LocationInfo;
 
 /**
@@ -20,7 +21,7 @@ public class LocationServiceTest extends AndroidTestCase {
 		assertTrue(info != null);
 	}
 	
-	public void test() {
+	public void testSaveUserLocaltion() {
 		LocationInfo info = new LocationInfo();
 		info.setUserId("1111");
 		info.setLatitude(39.915);
@@ -28,6 +29,7 @@ public class LocationServiceTest extends AndroidTestCase {
 		info.setRadius(44.5f);
 		info.setAddr("ÖÐ¹ú");
 		
-		this.locationService.saveUserLocaltion(info);
+		CodeMsg result = this.locationService.saveUserLocaltion(info);
+		assertTrue(result.getCode() == 0);
 	}
 }

@@ -24,7 +24,7 @@ import com.findyou.utils.JsonUtils;
  */
 public class LocationService {
 
-	private static final String SAVE_LOCATION_URL = "https://raw.github.com/hongliuliao/findyou/master/client/findyou/test/saveMyInfo.json";
+	private static final String SAVE_LOCATION_URL = "http://iamhere1.duapp.com/saveAddr.jsp";
 	
 	private static final String GET_LOCATION_URL = "http://iamhere1.duapp.com/getAddr.jsp";
 	

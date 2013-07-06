@@ -14,6 +14,7 @@ import com.findyou.model.CodeMsg;
 import com.findyou.model.LocationInfo;
 import com.findyou.model.MapViewLocation;
 import com.findyou.service.LocationService;
+import com.findyou.service.UserService;
 
 /**
  * @author Administrator
@@ -24,6 +25,8 @@ public class MyLocationListener implements BDLocationListener {
 	private MapView mMapView;
 	
 	private LocationService locationService = new LocationService();
+	
+	private UserService userService = new UserService();
 	
 	private String myTelphoneNumber;
 	
@@ -62,20 +65,27 @@ public class MyLocationListener implements BDLocationListener {
 			
 			@Override
 			public void run() {
-				CodeMsg result = locationService.saveUserLocaltion(convertToLocationInfo(location));
+				String userId = userService.getUserId(myTelphoneNumber);
+				if(userId == null) {
+					userId = userService.saveUser(myTelphoneNumber);
+				}
+				if(userId == null) {
+					Log.w("sendLocationInfoToServer", "user is null which phoneNumber:" + myTelphoneNumber);
+				}
+				CodeMsg result = locationService.saveUserLocaltion(convertToLocationInfo(location, userId));
 				Log.i("sendLocationInfoToServer", "codemsg:" + result);
 			}
 		}.start();
 		
 	}
 	
-	private LocationInfo convertToLocationInfo(BDLocation location) {
+	private LocationInfo convertToLocationInfo(BDLocation location, String userId) {
 		LocationInfo info = new LocationInfo();
 		info.setAddr(location.getAddrStr());
 		info.setLatitude(location.getLatitude());
 		info.setLontitude(location.getLongitude());
 		info.setRadius(location.getRadius());
-		info.setUserId(this.myTelphoneNumber);
+		info.setUserId(userId);
 		return info;
 	}
 	
