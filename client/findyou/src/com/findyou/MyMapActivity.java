@@ -11,10 +11,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.baidu.mapapi.BMapManager;
-import com.baidu.mapapi.map.LocationData;
 import com.baidu.mapapi.map.MapController;
 import com.baidu.mapapi.map.MapView;
-import com.baidu.mapapi.map.MyLocationOverlay;
 import com.baidu.platform.comapi.basestruct.GeoPoint;
 import com.findyou.service.LocationService;
 
@@ -38,8 +36,6 @@ public class MyMapActivity extends Activity {
 		setContentView(R.layout.activity_map);
 		mMapView=(MapView)findViewById(R.id.bmapView);
 		mMapView.setBuiltInZoomControls(true);
-		//设置定位图层
-		mMapView.getOverlays().add(getMyLocationOverlay());
 		//设置启用内置的缩放控件
 		MapController mMapController=mMapView.getController();
 		// 得到mMapView的控制权,可以用它控制和驱动平移和缩放
@@ -49,17 +45,7 @@ public class MyMapActivity extends Activity {
 		mMapController.setZoom(12);//设置地图zoom级别
 		
 		//开启定位服务
-		locationService.start(getApplicationContext());
-	}
-	
-	public MyLocationOverlay getMyLocationOverlay() {
-		MyLocationOverlay myLocationOverlay = new MyLocationOverlay(mMapView);
-		LocationData locData = new LocationData();
-		locData.latitude = 39.945;  
-		locData.longitude = 116.404;  
-		locData.direction = 2.0f;  
-		myLocationOverlay.setData(locData);
-		return myLocationOverlay;
+		locationService.start(getApplicationContext(), mMapView);
 	}
 	
 	@Override

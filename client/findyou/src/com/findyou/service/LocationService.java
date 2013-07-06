@@ -5,9 +5,9 @@ package com.findyou.service;
 
 import android.content.Context;
 
-import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
+import com.baidu.mapapi.map.MapView;
 import com.findyou.MyLocationListener;
 
 /**
@@ -18,11 +18,9 @@ public class LocationService {
 
 	public LocationClient mLocationClient = null;
 	
-	public BDLocationListener myListener = new MyLocationListener();
-	
-	public void start(Context context) {
+	public void start(Context context, MapView mMapView) {
 		mLocationClient = new LocationClient(context);     //ÉùÃ÷LocationClientÀà
-        mLocationClient.registerLocationListener( myListener );    //×¢²á¼àÌýº¯Êý
+        mLocationClient.registerLocationListener( new MyLocationListener(mMapView));    //×¢²á¼àÌýº¯Êý
         mLocationClient.setLocOption(getOption());
         mLocationClient.start();
 	}
