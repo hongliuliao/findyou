@@ -60,7 +60,7 @@ public class MyMapActivity extends Activity {
         case 1:  
             Log.i("MapActivity", "select show friends");
             Intent intent = new Intent();
-            intent.setClass(this, MainActivity.class);
+            intent.setClass(this, PhotoBookActivity.class);
             startActivity(intent);
             break;  
         default:  
