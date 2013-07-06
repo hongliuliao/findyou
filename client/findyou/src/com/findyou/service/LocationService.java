@@ -15,6 +15,7 @@ import com.baidu.mapapi.map.MapView;
 import com.findyou.MyLocationListener;
 import com.findyou.model.CodeMsg;
 import com.findyou.model.LocationInfo;
+import com.findyou.server.FindyouApplication;
 import com.findyou.utils.HttpClientUtils;
 import com.findyou.utils.JsonUtils;
 
@@ -30,9 +31,12 @@ public class LocationService {
 	
 	public LocationClient mLocationClient = null;
 	
+	public FindyouApplication context;
+	
 	public void start(Context context, MapView mMapView, String myTelphoneNumber) {
+		this.context = (FindyouApplication) context;
 		mLocationClient = new LocationClient(context);     //ÉùÃ÷LocationClientÀà
-        mLocationClient.registerLocationListener( new MyLocationListener(mMapView, myTelphoneNumber));    //×¢²á¼àÌýº¯Êý
+        mLocationClient.registerLocationListener( new MyLocationListener(mMapView, this.context));    //×¢²á¼àÌýº¯Êý
         mLocationClient.setLocOption(getOption());
         mLocationClient.start();
 	}

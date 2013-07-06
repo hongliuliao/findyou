@@ -11,6 +11,7 @@ import com.baidu.mapapi.map.MapView;
 import com.findyou.model.CodeMsg;
 import com.findyou.model.LocationInfo;
 import com.findyou.model.MapViewLocation;
+import com.findyou.server.FindyouApplication;
 import com.findyou.service.LocationService;
 import com.findyou.service.UserService;
 
@@ -26,7 +27,7 @@ public class MyLocationListener implements BDLocationListener {
 	
 	private UserService userService = new UserService();
 	
-	private String myTelphoneNumber;
+	private FindyouApplication application;
 	
 	private MapViewLocation mapViewLocation;
 	
@@ -35,10 +36,10 @@ public class MyLocationListener implements BDLocationListener {
 	/**
 	 * @param mMapView
 	 */
-	public MyLocationListener(MapView mMapView, String myTelphoneNumber) {
+	public MyLocationListener(MapView mMapView, FindyouApplication application) {
 		super();
 		this.mMapView = mMapView;
-		this.myTelphoneNumber = myTelphoneNumber;
+		this.application = application;
 		mapViewLocation = new MapViewLocation(mMapView);
 	}
 	@Override
@@ -68,12 +69,15 @@ public class MyLocationListener implements BDLocationListener {
 			
 			@Override
 			public void run() {
-				String userId = userService.getUserId(myTelphoneNumber);
+				if(!application.hasMyPhoneNum()) {
+					return;
+				}
+				String userId = userService.getUserId(application.getMyPhoneNum());
 				if(userId == null) {
-					userId = userService.saveUser(myTelphoneNumber);
+					userId = userService.saveUser(application.getMyPhoneNum());
 				}
 				if(userId == null) {
-					Log.w("sendLocationInfoToServer", "user is null which phoneNumber:" + myTelphoneNumber);
+					Log.w("sendLocationInfoToServer", "user is null which phoneNumber:" + application.getMyPhoneNum());
 				}
 				CodeMsg result = locationService.saveUserLocaltion(convertToLocationInfo(location, userId));
 				Log.i("sendLocationInfoToServer", "codemsg:" + result);

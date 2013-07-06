@@ -20,12 +20,12 @@ public class WelcomeActivity extends Activity {
 		
 		AlphaAnimation alphaAnimation = new AlphaAnimation(1.0f, 0.0f);
 		alphaAnimation.setDuration(2000);
+		alphaAnimation.setFillAfter(true);// 设置动画的最后一帧是保持在View上面
 		
 		alphaAnimation.setAnimationListener(new AnimationListener() {
 			
 			@Override
 			public void onAnimationEnd(Animation arg0) {
-				// TODO Auto-generated method stub
 				Intent intent = new Intent(WelcomeActivity.this,MyMapActivity.class);
 				startActivity(intent);
 				finish();
@@ -33,13 +33,11 @@ public class WelcomeActivity extends Activity {
 
 			@Override
 			public void onAnimationRepeat(Animation arg0) {
-				// TODO 自动生成的方法存根
 				
 			}
 
 			@Override
 			public void onAnimationStart(Animation arg0) {
-				// TODO 自动生成的方法存根
 				
 			}
 		});
