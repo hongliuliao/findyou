@@ -33,7 +33,11 @@ public class FindyouApplication extends Application {
 		if(StringUtils.isNotBlank(myPhoneNum)) {
 			return myPhoneNum;
 		}
-		return new PhoneService().getUserInfo(1).getPhoneNumber();// 1表示手机号
+		UserInfo userInfo = new PhoneService().getUserInfo(1);
+		if(userInfo == null) {
+			return null;
+		}
+		return userInfo.getPhoneNumber();// 1表示手机号
 	}
 	
 	private String getMyTelPhoneNumber() {
