@@ -4,8 +4,10 @@
 package com.findyou;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -47,7 +49,12 @@ public class MyMapActivity extends Activity {
 		mMapController.setZoom(12);//设置地图zoom级别
 		
 		//开启定位服务
-		locationService.start(getApplicationContext(), mMapView);
+		locationService.start(getApplicationContext(), mMapView, getMyTelPhoneNumber());
+	}
+	
+	private String getMyTelPhoneNumber() {
+		TelephonyManager tm = (TelephonyManager) this.getSystemService(Context.TELEPHONY_SERVICE);
+		return tm.getLine1Number();
 	}
 	
 	@Override

@@ -50,6 +50,14 @@ public class CodeMsg {
 	public void setMsg(String msg) {
 		this.msg = msg;
 	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "CodeMsg [code=" + code + ", msg=" + msg + "]";
+	}
 	
 	
 }
