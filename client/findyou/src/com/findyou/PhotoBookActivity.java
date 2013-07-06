@@ -52,6 +52,7 @@ public class PhotoBookActivity extends Activity {
         intent.setClass(this, MyMapActivity.class);
         intent.putExtra("phoneNumber", phoneNumber);
         startActivity(intent);
+        this.finish();
     }
     
 	private String getPhoneNumber(String contactId) {

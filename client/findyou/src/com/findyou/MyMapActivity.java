@@ -136,6 +136,7 @@ public class MyMapActivity extends Activity {
             Intent intent = new Intent();
             intent.setClass(this, PhotoBookActivity.class);
             startActivity(intent);
+            this.finish();
             break;  
         default:  
             break;  
