@@ -18,6 +18,7 @@ import com.findyou.model.LocationInfo;
 import com.findyou.server.FindyouApplication;
 import com.findyou.utils.HttpClientUtils;
 import com.findyou.utils.JsonUtils;
+import com.findyou.utils.StringUtils;
 
 /**
  * @author Administrator
@@ -76,6 +77,9 @@ public class LocationService {
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("phoneNum", phoneNumber);
 		String result = HttpClientUtils.getHttpGetResult(GET_LOCATION_URL, params);
+		if(StringUtils.isBlank(result)) {
+			throw new RuntimeException("can not GET_LOCATION_URL which params:" + params);
+		}
 		return JsonUtils.toLocationInfo(result);
 	}
 	

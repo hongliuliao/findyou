@@ -143,18 +143,26 @@ public class MyMapActivity extends Activity {
     		
     		@Override
     		public void run() {
-    			LocationInfo info = locationService.getUserLocation(phoneNumber);
-    			if(info == null) {
-    				Looper.prepare();
-    				showMessage("该好友信息不存在,请确定TA在线上!");
+    			try {
+    				LocationInfo info = locationService.getUserLocation(phoneNumber);
+        			if(info == null) {
+        				Looper.prepare();
+        				showMessage("该好友信息不存在,请确定TA在线上!");
+        				Looper.loop();
+        				return;
+        			}
+        			Message msg = new Message();
+        			msg.what = SHOW_FRIEND;
+        			msg.getData().putDouble(FRIEND_LATITUDE, info.getLatitude());
+        			msg.getData().putDouble(FRIEND_LONTITUDE, info.getLontitude());
+        			mHandler.sendMessage(msg);
+				} catch (Exception e) {
+					Log.e("locationService", "getUserLocation error which phoneNumber:" + phoneNumber, e);
+					Looper.prepare();
+    				showMessage("获取好友信息异常,请检查网络!");
     				Looper.loop();
     				return;
-    			}
-    			Message msg = new Message();
-    			msg.what = SHOW_FRIEND;
-    			msg.getData().putDouble(FRIEND_LATITUDE, info.getLatitude());
-    			msg.getData().putDouble(FRIEND_LONTITUDE, info.getLontitude());
-    			mHandler.sendMessage(msg);
+				}
     		}
     	}.start();
     }
