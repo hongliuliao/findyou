@@ -8,19 +8,24 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.baidu.mapapi.BMapManager;
 import com.baidu.mapapi.map.MapController;
 import com.baidu.mapapi.map.MapView;
+import com.baidu.mapapi.map.PopupOverlay;
 import com.baidu.platform.comapi.basestruct.GeoPoint;
 import com.findyou.data.DataHelper;
 import com.findyou.model.LocationInfo;
@@ -28,6 +33,7 @@ import com.findyou.model.MapViewLocation;
 import com.findyou.server.FindyouApplication;
 import com.findyou.service.LocationService;
 import com.findyou.service.PhoneService;
+import com.findyou.utils.BMapUtil;
 import com.findyou.utils.StringUtils;
 
 
@@ -63,11 +69,33 @@ public class MyMapActivity extends Activity {
             	double lontitude = msg.getData().getDouble(FRIEND_LONTITUDE);
             	mapViewLocation.setLocation(latitude, lontitude);
             	mapViewLocation.setViewToLocation(latitude, lontitude);
+            	addPop(latitude, lontitude);
     			mapViewLocation.reflush();
     			break;
             }  
         };  
     };
+    
+    /**
+     * Ìí¼ÓÆøÅÝ
+     */
+    public void addPop(double latitude, double lontitude) {
+    	final String friendName = ((FindyouApplication)getApplication()).getFriendName();
+    	try {
+			final GeoPoint friendPoint = new GeoPoint((int) (latitude * 1E6), (int) (lontitude * 1E6));
+			final PopupOverlay pop = new PopupOverlay(mMapView, null);
+			pop.showPopup(getPopBitmap(friendName), friendPoint, 32);
+		} catch (Exception e) {
+			Log.e("Add Pop", "fail which friendName:" + friendName, e);
+		}
+    }
+    
+    private Bitmap getPopBitmap(String friendName) {
+    	View popview = LayoutInflater.from(getApplicationContext()).inflate(R.layout.pop, null);
+		TextView popText = (TextView)popview.findViewById(R.id.pop_text); 
+		popText.setText(friendName);
+		return BMapUtil.getBitmapFromView(popview);
+    }
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

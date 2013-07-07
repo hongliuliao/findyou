@@ -40,9 +40,9 @@ public class PhotoBookActivity extends Activity {
         	return;
         }
         cursor.moveToFirst();
-        String username = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
+        String friendName = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
         TextView textView = (TextView) findViewById(R.id.friendText);
-        textView.setText(username);
+        textView.setText(friendName);
         
         String contactId = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID));
         cursor.close();  
@@ -51,6 +51,7 @@ public class PhotoBookActivity extends Activity {
         textView.setText(textView.getText() + phoneNumber);
         
         FindyouApplication application = (FindyouApplication) this.getApplication();
+        application.setFriendName(friendName);
         application.setFriendPhoneNum(phoneNumber);
         this.finish();
     }

@@ -20,6 +20,22 @@ public class FindyouApplication extends Application {
 
 	public String friendPhoneNum;
 	
+	private String friendName;
+	
+	/**
+	 * @return the friendName
+	 */
+	public String getFriendName() {
+		return friendName;
+	}
+
+	/**
+	 * @param friendName the friendName to set
+	 */
+	public void setFriendName(String friendName) {
+		this.friendName = friendName;
+	}
+
 	private String myPhoneNum;
 
 	/**
