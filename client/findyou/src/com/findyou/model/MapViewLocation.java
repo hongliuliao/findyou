@@ -3,6 +3,7 @@
  */
 package com.findyou.model;
 
+import com.baidu.mapapi.map.LocationData;
 import com.baidu.mapapi.map.MapController;
 import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.MyLocationOverlay;
@@ -29,11 +30,16 @@ public class MapViewLocation {
 	
 	public MapViewLocation setLocation(double latitude, double longitude) {
 		MyLocationOverlay myOverlay = LayerUtils.getMyLocationOverlay(mapView, latitude, longitude);
-		if(lastMyOverlay != null) {
-			mapView.getOverlays().remove(lastMyOverlay);
+		if(lastMyOverlay == null) {
+			mapView.getOverlays().add(myOverlay);
+			lastMyOverlay = myOverlay;
+//			mapView.getOverlays().remove(lastMyOverlay);
 		}
-		lastMyOverlay = myOverlay;
-		mapView.getOverlays().add(myOverlay);
+		
+		LocationData locData = lastMyOverlay.getMyLocation();
+		locData.latitude = latitude;  
+		locData.longitude = longitude;  
+		locData.direction = 2.0f;
 		return this;
 	}
 	
