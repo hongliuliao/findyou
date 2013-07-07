@@ -157,6 +157,7 @@ public class MyMapActivity extends Activity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		menu.add(Menu.NONE, 1, 0, "选择好友");
 		menu.add(Menu.NONE, 2, 0, "设置手机号码");
+		menu.add(Menu.NONE, 3, 0, "退出");
 		return super.onCreateOptionsMenu(menu);
 	}
 	
@@ -190,6 +191,11 @@ public class MyMapActivity extends Activity {
             });
         	builder.setPositiveButton("取消", null);
             builder.show();
+            break;
+        case 3:
+        	this.finish();
+        	System.exit(0);
+        	break;
         default:  
             break;  
         }  
