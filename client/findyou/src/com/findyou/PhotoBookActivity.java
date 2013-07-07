@@ -1,6 +1,7 @@
 package com.findyou;
 
 import com.findyou.server.FindyouApplication;
+import com.findyou.utils.StringUtils;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -67,6 +68,8 @@ public class PhotoBookActivity extends Activity {
 		    phoneNumber = phone.getString(phone.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));  
 		    Log.i("MainActivity", phoneNumber);
 		}
+		// 过滤手机 号,使之规范
+		phoneNumber = StringUtils.filterPhoneNumber(phoneNumber);
 		return phoneNumber;
 	}
 
