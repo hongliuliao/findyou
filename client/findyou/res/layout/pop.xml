@@ -8,10 +8,11 @@
 
     <TextView
         android:id="@+id/pop_text"
-        android:gravity="center"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
         android:layout_gravity="center"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:gravity="center_vertical|center_horizontal|center"
+        android:text="123"
         android:textColor="@android:color/black" />
 
 </LinearLayout>
