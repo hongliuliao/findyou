@@ -70,6 +70,7 @@ public class FindyouApplication extends Application {
 	 * @param myPhoneNum the myPhoneNum to set
 	 */
 	public void setMyPhoneNum(String myPhoneNum) {
+		myPhoneNum = StringUtils.filterPhoneNumber(myPhoneNum);
 		UserInfo userInfo=new UserInfo();
 		userInfo.setPhoneNumber(myPhoneNum);
 		new PhoneService().saveUserInfo(userInfo);
