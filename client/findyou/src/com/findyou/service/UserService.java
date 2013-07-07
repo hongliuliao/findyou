@@ -32,7 +32,7 @@ public class UserService {
 		params.put("phoneNum", phoneNum);
 		String result = HttpClientUtils.getHttpGetResult(QUERY_USER_URL, params);
 		
-		if(result.trim().equals("{}")) {
+		if(result == null || result.trim().equals("{}")) {
 			return null;
 		}
 		try {

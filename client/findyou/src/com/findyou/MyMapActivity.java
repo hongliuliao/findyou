@@ -25,6 +25,7 @@ import android.widget.Toast;
 import com.baidu.mapapi.BMapManager;
 import com.baidu.mapapi.map.MapController;
 import com.baidu.mapapi.map.MapView;
+import com.baidu.mapapi.map.PopupClickListener;
 import com.baidu.mapapi.map.PopupOverlay;
 import com.baidu.platform.comapi.basestruct.GeoPoint;
 import com.findyou.data.DataHelper;
@@ -83,7 +84,16 @@ public class MyMapActivity extends Activity {
     	final String friendName = ((FindyouApplication)getApplication()).getFriendName();
     	try {
 			final GeoPoint friendPoint = new GeoPoint((int) (latitude * 1E6), (int) (lontitude * 1E6));
-			final PopupOverlay pop = new PopupOverlay(mMapView, null);
+			final PopupOverlay pop = new PopupOverlay(mMapView, new PopupClickListener() {                  
+		        @Override  
+		        public void onClickedPopup(int index) {  
+		                //在此处理pop点击事件，index为点击区域索引,点击区域最多可有三个  
+		        	Log.i("SearchActivity", "Search map");
+//		            Intent intent = new Intent();
+//		        	intent.setClass(MyMapActivity.this, BusLineSearchActivity.class);
+//		            startActivity(intent);
+		        }  
+		});
 			pop.showPopup(getPopBitmap(friendName), friendPoint, 32);
 		} catch (Exception e) {
 			Log.e("Add Pop", "fail which friendName:" + friendName, e);
@@ -104,6 +114,8 @@ public class MyMapActivity extends Activity {
 		mBMapMan=new BMapManager(getApplication());
 		mBMapMan.init("EB21E59591611451362F228A82E72CA98AEDC437", null); 
 		//注意：请在试用setContentView前初始化BMapManager对象，否则会报错
+		FindyouApplication application = (FindyouApplication) this.getApplication();
+		application.mBMapManager = mBMapMan;
 		setContentView(R.layout.activity_map);
 		mMapView=(MapView)findViewById(R.id.bmapView);
 		mMapView.setBuiltInZoomControls(true);

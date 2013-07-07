@@ -54,6 +54,10 @@
             android:label="@string/app_name" >
         </activity>
         <activity
+            android:name="com.findyou.BusLineSearchActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
             android:name="com.findyou.MyMapActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="sensor" >

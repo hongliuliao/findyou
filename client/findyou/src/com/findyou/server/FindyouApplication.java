@@ -7,6 +7,7 @@ import android.app.Application;
 import android.content.Context;
 import android.telephony.TelephonyManager;
 
+import com.baidu.mapapi.BMapManager;
 import com.findyou.service.PhoneService;
 import com.findyou.utils.StringUtils;
 
@@ -21,6 +22,8 @@ public class FindyouApplication extends Application {
 	public String friendPhoneNum;
 	
 	private String friendName;
+	
+	public BMapManager mBMapManager;
 	
 	/**
 	 * @return the friendName
