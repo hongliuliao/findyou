@@ -25,10 +25,12 @@ import com.findyou.utils.StringUtils;
  *
  */
 public class LocationService {
-
-	private static final String SAVE_LOCATION_URL = "http://171.16.1.101:8080/findyou-server/saveAddr";
 	
-	private static final String GET_LOCATION_URL = "http://171.16.1.101:8080/findyou-server/getAddr";
+	private static final String DOMAIN_URL = "http://findyou2.duapp.com";
+
+	private static final String SAVE_LOCATION_URL = DOMAIN_URL + "/saveAddr";
+	
+	private static final String GET_LOCATION_URL = DOMAIN_URL + "/getAddr";
 	
 	public LocationClient mLocationClient = null;
 	

@@ -138,24 +138,26 @@ public class MyMapActivity extends Activity {
 	}
 	
 	private void startGetFriendLocation(final String phoneNumber) {
-    	
     	new Thread() {
     		
     		@Override
     		public void run() {
     			try {
-    				LocationInfo info = locationService.getUserLocation(phoneNumber);
-        			if(info == null) {
-        				Looper.prepare();
-        				showMessage("该好友信息不存在,请确定TA在线上!");
-        				Looper.loop();
-        				return;
-        			}
-        			Message msg = new Message();
-        			msg.what = SHOW_FRIEND;
-        			msg.getData().putDouble(FRIEND_LATITUDE, info.getLatitude());
-        			msg.getData().putDouble(FRIEND_LONTITUDE, info.getLontitude());
-        			mHandler.sendMessage(msg);
+    				while(true) {
+    					LocationInfo info = locationService.getUserLocation(phoneNumber);
+            			if(info == null) {
+            				Looper.prepare();
+            				showMessage("该好友信息不存在,请确定TA在线上!");
+            				Looper.loop();
+            				return;
+            			}
+            			Message msg = new Message();
+            			msg.what = SHOW_FRIEND;
+            			msg.getData().putDouble(FRIEND_LATITUDE, info.getLatitude());
+            			msg.getData().putDouble(FRIEND_LONTITUDE, info.getLontitude());
+            			mHandler.sendMessage(msg);
+            			Thread.sleep(10000);
+    				}
 				} catch (Exception e) {
 					Log.e("locationService", "getUserLocation error which phoneNumber:" + phoneNumber, e);
 					Looper.prepare();
