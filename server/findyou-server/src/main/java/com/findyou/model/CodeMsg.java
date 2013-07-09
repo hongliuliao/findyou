@@ -10,6 +10,10 @@ package com.findyou.model;
  * 创建日期:2013-7-6 上午9:59:57
  */
 public class CodeMsg<T> {
+	
+	public static final int SUCCESS_CODE = 0;
+	
+	public static final int FAIL_CODE = 1;
 
 	private int code;
 	
@@ -17,11 +21,17 @@ public class CodeMsg<T> {
 	
 	private T data;
 	
+	public CodeMsg(int code, String msg) {
+		super();
+		this.code = code;
+		this.msg = msg;
+	}
 	public T getData() {
 		return data;
 	}
-	public void setData(T data) {
+	public CodeMsg<T> setData(T data) {
 		this.data = data;
+		return this;
 	}
 	public int getCode() {
 		return code;
