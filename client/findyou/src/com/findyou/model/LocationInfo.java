@@ -11,10 +11,6 @@ package com.findyou.model;
 public class LocationInfo {
 
 	/**
-	 * 用户信息唯一标示
-	 */
-	private int id;
-	/**
 	 * 用户唯一标示
 	 */
 	private String userId;
@@ -92,18 +88,5 @@ public class LocationInfo {
 	public void setLontitude(double lontitude) {
 		this.lontitude = lontitude;
 	}
-	/**
-	 * @return the id
-	 */
-	public int getId() {
-		return id;
-	}
-	/**
-	 * @param id the id to set
-	 */
-	public void setId(int id) {
-		this.id = id;
-	}
-	
 	
 }

@@ -10,10 +10,13 @@ import java.util.Map.Entry;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 
 import android.util.Log;
@@ -50,4 +53,29 @@ public class HttpClientUtils {
 			return null;
 		}
 	} 
+	
+	public static String getHttpPostResult(String requestUrl, Map<String, String> inputParams) {
+		List<BasicNameValuePair> params = new LinkedList<BasicNameValuePair>();  
+		for (Entry<String, String> e : inputParams.entrySet()) {
+			params.add(new BasicNameValuePair(e.getKey(), e.getValue()));  
+		}
+		HttpPost postMethod = new HttpPost(requestUrl);
+		Log.i("HttpClient", "send http request which url:" + requestUrl);
+		HttpClient httpClient = new DefaultHttpClient(); 
+		try {  
+			postMethod.setEntity(new UrlEncodedFormEntity(params, HTTP.UTF_8));
+		    HttpResponse response = httpClient.execute(postMethod); //发起GET请求  
+		    if(response.getStatusLine().getStatusCode() != 200) { // success
+		    	throw new RuntimeException("get http result error which url:" + requestUrl);
+		    }
+		    String result = EntityUtils.toString(response.getEntity(), "utf-8");
+		    Log.i(TAG, "resCode = " + response.getStatusLine().getStatusCode()); //获取响应码  
+		    Log.i(TAG, "result = " + result);//获取服务器响应内容
+		    return result;
+		} catch (Exception e) {  
+			Log.e("HttpClient", "getHttpGetResult error which url:" + requestUrl, e);
+			return null;
+		}
+	} 
+	
 }

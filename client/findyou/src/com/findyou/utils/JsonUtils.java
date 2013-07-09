@@ -53,12 +53,13 @@ public class JsonUtils {
 	public static LocationInfo toLocationInfo(String jsonInfo) {
 			try {
 				JSONObject jsonObject = new JSONObject(jsonInfo);
-				if(jsonInfo.trim().equals("{}")) {
+				if(jsonObject.getInt("code") != 0) {
 					return null;
 				}
+				// 取出数据来
+				jsonObject = jsonObject.getJSONObject("data");
 				LocationInfo info = new LocationInfo();
 				
-				info.setId(jsonObject.getInt("id"));
 				info.setLatitude(jsonObject.getDouble("latitude"));
 				info.setAddr(jsonObject.getString("addr"));
 				info.setLontitude(jsonObject.getDouble("lontitude"));

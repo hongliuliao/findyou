@@ -26,9 +26,9 @@ import com.findyou.utils.StringUtils;
  */
 public class LocationService {
 
-	private static final String SAVE_LOCATION_URL = "http://iamhere1.duapp.com/saveAddr.jsp";
+	private static final String SAVE_LOCATION_URL = "http://171.16.1.101:8080/findyou-server/saveAddr";
 	
-	private static final String GET_LOCATION_URL = "http://iamhere1.duapp.com/getAddr.jsp";
+	private static final String GET_LOCATION_URL = "http://171.16.1.101:8080/findyou-server/getAddr";
 	
 	public LocationClient mLocationClient = null;
 	
@@ -69,13 +69,13 @@ public class LocationService {
 		params.put("radius", info.getRadius() + "");
 		params.put("addr", info.getAddr() + "");
 		
-		String result = HttpClientUtils.getHttpGetResult(SAVE_LOCATION_URL, params);
+		String result = HttpClientUtils.getHttpPostResult(SAVE_LOCATION_URL, params);
 		return JsonUtils.toCodeMsg(result);
 	}
 	
 	public LocationInfo getUserLocation(String phoneNumber) {
 		Map<String, String> params = new HashMap<String, String>();
-		params.put("phoneNum", phoneNumber);
+		params.put("userId", phoneNumber);
 		String result = HttpClientUtils.getHttpGetResult(GET_LOCATION_URL, params);
 		if(StringUtils.isBlank(result)) {
 			throw new RuntimeException("can not GET_LOCATION_URL which params:" + params);

@@ -17,7 +17,7 @@ public class LocationServiceTest extends AndroidTestCase {
 	LocationService locationService = new LocationService();
 	
 	public void testGetUserLocation() {
-		LocationInfo info = locationService.getUserLocation("1234");
+		LocationInfo info = locationService.getUserLocation("15801182328");
 		assertTrue(info != null);
 	}
 	

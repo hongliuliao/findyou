@@ -13,7 +13,6 @@ import com.findyou.model.LocationInfo;
 import com.findyou.model.MapViewLocation;
 import com.findyou.server.FindyouApplication;
 import com.findyou.service.LocationService;
-import com.findyou.service.UserService;
 
 /**
  * @author Administrator
@@ -24,8 +23,6 @@ public class MyLocationListener implements BDLocationListener {
 	private MapView mMapView;
 	
 	private LocationService locationService = new LocationService();
-	
-	private UserService userService = new UserService();
 	
 	private FindyouApplication application;
 	
@@ -73,14 +70,7 @@ public class MyLocationListener implements BDLocationListener {
 				if(!application.hasMyPhoneNum()) {
 					return;
 				}
-				String userId = userService.getUserId(application.getMyPhoneNum());
-				if(userId == null) {
-					userId = userService.saveUser(application.getMyPhoneNum());
-				}
-				if(userId == null) {
-					Log.w("sendLocationInfoToServer", "user is null which phoneNumber:" + application.getMyPhoneNum());
-				}
-				CodeMsg result = locationService.saveUserLocaltion(convertToLocationInfo(location, userId));
+				CodeMsg result = locationService.saveUserLocaltion(convertToLocationInfo(location, application.getMyPhoneNum()));
 				Log.i("sendLocationInfoToServer", "codemsg:" + result);
 			}
 		}.start();
