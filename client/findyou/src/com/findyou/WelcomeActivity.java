@@ -1,19 +1,28 @@
 package com.findyou;
 
-import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.Menu;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.widget.ImageView;
 
+import com.findyou.server.FindyouApplication;
+
 public class WelcomeActivity extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		final FindyouApplication app = (FindyouApplication) this.getApplication();
+		if(app.isStarted()) {
+			Intent intent = new Intent(WelcomeActivity.this,MyMapActivity.class);
+			startActivity(intent);
+			finish();
+			return;
+		}
 		setContentView(R.layout.activity_welcome);
 		
 		ImageView img= (ImageView)findViewById(R.id.img_welcome);
@@ -26,6 +35,7 @@ public class WelcomeActivity extends Activity {
 			
 			@Override
 			public void onAnimationEnd(Animation arg0) {
+				app.setStarted(true);
 				Intent intent = new Intent(WelcomeActivity.this,MyMapActivity.class);
 				startActivity(intent);
 				finish();

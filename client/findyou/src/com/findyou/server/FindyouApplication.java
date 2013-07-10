@@ -25,6 +25,38 @@ public class FindyouApplication extends Application {
 	
 	public BMapManager mBMapManager;
 	
+	private volatile boolean isRequest;
+	
+	private boolean started;
+	
+	/**
+	 * @return the started
+	 */
+	public boolean isStarted() {
+		return started;
+	}
+
+	/**
+	 * @param started the started to set
+	 */
+	public void setStarted(boolean started) {
+		this.started = started;
+	}
+
+	/**
+	 * @return the isRequest
+	 */
+	public boolean isRequest() {
+		return isRequest;
+	}
+
+	/**
+	 * @param isRequest the isRequest to set
+	 */
+	public void setRequest(boolean isRequest) {
+		this.isRequest = isRequest;
+	}
+
 	/**
 	 * @return the friendName
 	 */

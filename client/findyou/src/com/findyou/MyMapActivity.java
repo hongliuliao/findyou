@@ -8,25 +8,19 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.baidu.mapapi.BMapManager;
 import com.baidu.mapapi.map.MapController;
 import com.baidu.mapapi.map.MapView;
-import com.baidu.mapapi.map.PopupClickListener;
-import com.baidu.mapapi.map.PopupOverlay;
 import com.baidu.platform.comapi.basestruct.GeoPoint;
 import com.findyou.data.DataHelper;
 import com.findyou.model.LocationInfo;
@@ -34,7 +28,6 @@ import com.findyou.model.MapViewLocation;
 import com.findyou.server.FindyouApplication;
 import com.findyou.service.LocationService;
 import com.findyou.service.PhoneService;
-import com.findyou.utils.BMapUtil;
 import com.findyou.utils.StringUtils;
 
 
@@ -60,6 +53,12 @@ public class MyMapActivity extends Activity {
 	private static String FRIEND_LATITUDE = "FRIEND_LATITUDE";
 	private static String FRIEND_LONTITUDE = "FRIEND_LONTITUDE";
 	
+	public static final int SELECT_FRIEND = 1;
+	public static final int PHONE_NUM_SETTING = 2;
+	public static final int SEND_MY_LOCATION = 3;
+	public static final int EXIT = 4;
+	
+	
 	@SuppressLint("HandlerLeak")
 	private Handler mHandler = new Handler(){  
         
@@ -68,45 +67,12 @@ public class MyMapActivity extends Activity {
             case SHOW_FRIEND:  
             	double latitude = msg.getData().getDouble(FRIEND_LATITUDE);
             	double lontitude = msg.getData().getDouble(FRIEND_LONTITUDE);
-            	mapViewLocation.setLocation(latitude, lontitude);
-            	mapViewLocation.setViewToLocation(latitude, lontitude);
-            	addPop(latitude, lontitude);
-    			mapViewLocation.reflush();
+            	locationService.showFriendLocation(mapViewLocation, latitude, lontitude);
     			break;
             }  
         };  
     };
     
-    /**
-     * 添加气泡
-     */
-    public void addPop(double latitude, double lontitude) {
-    	final String friendName = ((FindyouApplication)getApplication()).getFriendName();
-    	try {
-			final GeoPoint friendPoint = new GeoPoint((int) (latitude * 1E6), (int) (lontitude * 1E6));
-			final PopupOverlay pop = new PopupOverlay(mMapView, new PopupClickListener() {                  
-		        @Override  
-		        public void onClickedPopup(int index) {  
-		                //在此处理pop点击事件，index为点击区域索引,点击区域最多可有三个  
-		        	Log.i("SearchActivity", "Search map");
-//		            Intent intent = new Intent();
-//		        	intent.setClass(MyMapActivity.this, BusLineSearchActivity.class);
-//		            startActivity(intent);
-		        }  
-		});
-			pop.showPopup(getPopBitmap(friendName), friendPoint, 32);
-		} catch (Exception e) {
-			Log.e("Add Pop", "fail which friendName:" + friendName, e);
-		}
-    }
-    
-    private Bitmap getPopBitmap(String friendName) {
-    	View popview = LayoutInflater.from(getApplicationContext()).inflate(R.layout.pop, null);
-		TextView popText = (TextView)popview.findViewById(R.id.pop_text); 
-		popText.setText(friendName);
-		return BMapUtil.getBitmapFromView(popview);
-    }
-	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -156,7 +122,7 @@ public class MyMapActivity extends Activity {
             			msg.getData().putDouble(FRIEND_LATITUDE, info.getLatitude());
             			msg.getData().putDouble(FRIEND_LONTITUDE, info.getLontitude());
             			mHandler.sendMessage(msg);
-            			Thread.sleep(10000);
+            			Thread.sleep(60000);
     				}
 				} catch (Exception e) {
 					Log.e("locationService", "getUserLocation error which phoneNumber:" + phoneNumber, e);
@@ -177,22 +143,23 @@ public class MyMapActivity extends Activity {
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		menu.add(Menu.NONE, 1, 0, "选择好友");
-		menu.add(Menu.NONE, 2, 0, "设置手机号码");
-		menu.add(Menu.NONE, 3, 0, "退出");
+		menu.add(Menu.NONE, SELECT_FRIEND, 0, "选择好友");
+		menu.add(Menu.NONE, PHONE_NUM_SETTING, 0, "设置手机号码");
+		menu.add(Menu.NONE, SEND_MY_LOCATION, 0, "定位自己");
+		menu.add(Menu.NONE, EXIT, 0, "退出");
 		return super.onCreateOptionsMenu(menu);
 	}
 	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {  
-        case 1:  
+        case SELECT_FRIEND:  
             Log.i("MapActivity", "select show friends");
             Intent intent = new Intent();
             intent.setClass(this, PhotoBookActivity.class);
             startActivity(intent);
             break;  
-        case 2:
+        case PHONE_NUM_SETTING:
         	final EditText inputPhoneNum = new EditText(this);
         	FindyouApplication app = (FindyouApplication) getApplication();
         	inputPhoneNum.setText(app.getMyPhoneNum());
@@ -214,7 +181,11 @@ public class MyMapActivity extends Activity {
         	builder.setPositiveButton("取消", null);
             builder.show();
             break;
-        case 3:
+        case SEND_MY_LOCATION:
+        	boolean result = this.locationService.requestLocation();
+        	Toast.makeText(getApplicationContext(), result ? "定位成功!" : "定位失败!", Toast.LENGTH_SHORT).show();
+        	break;
+        case EXIT:
         	this.finish();
         	System.exit(0);
         	break;

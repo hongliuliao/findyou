@@ -28,6 +28,13 @@ public class MapViewLocation {
 		this.mapView = mapView;
 	}
 	
+	/**
+	 * @return the mapView
+	 */
+	public MapView getMapView() {
+		return mapView;
+	}
+
 	public MapViewLocation setLocation(double latitude, double longitude) {
 		MyLocationOverlay myOverlay = LayerUtils.getMyLocationOverlay(mapView, latitude, longitude);
 		if(lastMyOverlay == null) {
@@ -40,6 +47,7 @@ public class MapViewLocation {
 		locData.latitude = latitude;  
 		locData.longitude = longitude;  
 		locData.direction = 2.0f;
+		myOverlay.setData(locData);
 		return this;
 	}
 	

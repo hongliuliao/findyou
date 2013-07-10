@@ -49,9 +49,10 @@ public class MyLocationListener implements BDLocationListener {
 		
 		try {
 			mapViewLocation.setLocation(location.getLatitude(), location.getLongitude());
-			if(isFrist) {
+			if(isFrist || application.isRequest()) {
 				mapViewLocation.setViewToLocation(location.getLatitude(), location.getLongitude());
 				isFrist = false;
+				application.setRequest(false);
 			}
 			mMapView.refresh();
 			
