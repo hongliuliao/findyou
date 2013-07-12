@@ -21,7 +21,6 @@ import android.widget.Toast;
 import com.baidu.mapapi.BMapManager;
 import com.baidu.mapapi.map.MapController;
 import com.baidu.mapapi.map.MapView;
-import com.baidu.platform.comapi.basestruct.GeoPoint;
 import com.findyou.data.DataHelper;
 import com.findyou.model.LocationInfo;
 import com.findyou.model.MapViewLocation;
