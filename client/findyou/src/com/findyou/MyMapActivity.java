@@ -79,23 +79,23 @@ public class MyMapActivity extends Activity {
 		DATAHELPER=new DataHelper(getApplicationContext(), DATAFILENAME);
 		mBMapMan=new BMapManager(getApplication());
 		mBMapMan.init("EB21E59591611451362F228A82E72CA98AEDC437", null); 
-		//×¢Òâ£ºÇëÔÚÊÔÓÃsetContentViewÇ°³õÊ¼»¯BMapManager¶ÔÏó£¬·ñÔò»á±¨´í
+		//æ³¨æ„ï¼šè¯·åœ¨è¯•ç”¨setContentViewå‰åˆå§‹åŒ–BMapManagerå¯¹è±¡ï¼Œå¦åˆ™ä¼šæŠ¥é”™
 		FindyouApplication application = (FindyouApplication) this.getApplication();
 		application.mBMapManager = mBMapMan;
 		setContentView(R.layout.activity_map);
 		mMapView=(MapView)findViewById(R.id.bmapView);
 		mMapView.setBuiltInZoomControls(true);
 		mapViewLocation = new MapViewLocation(mMapView);
-		//ÉèÖÃÆôÓÃÄÚÖÃµÄËõ·Å¿Ø¼ş
+		//è®¾ç½®å¯ç”¨å†…ç½®çš„ç¼©æ”¾æ§ä»¶
 		MapController mMapController=mMapView.getController();
-		mMapController.setZoom(12);//ÉèÖÃµØÍ¼zoom¼¶±ğ
+		mMapController.setZoom(12);//è®¾ç½®åœ°å›¾zoomçº§åˆ«
 		
 		FindyouApplication app = (FindyouApplication) this.getApplication();
 		String phoneNumber = app.getMyPhoneNum();
 		if(phoneNumber == null || phoneNumber.trim().equals("")) {
-			this.showMessage("²éÑ¯²»µ½ÄúµÄÊÖ»úºÅ,ÇëÔÚ²Ëµ¥ÖĞÉèÖÃÊÖ»úºÅ,·½±ãÄãµÄÅóÓÑÕÒµ½Äã!");
+			this.showMessage("æŸ¥è¯¢ä¸åˆ°æ‚¨çš„æ‰‹æœºå·,è¯·åœ¨èœå•ä¸­è®¾ç½®æ‰‹æœºå·,æ–¹ä¾¿ä½ çš„æœ‹å‹æ‰¾åˆ°ä½ !");
 		}
-		//¿ªÆô¶¨Î»·şÎñ
+		//å¼€å¯å®šä½æœåŠ¡
 		locationService.start(getApplicationContext(), mMapView, phoneNumber);
 	}
 	
@@ -109,7 +109,7 @@ public class MyMapActivity extends Activity {
     					LocationInfo info = locationService.getUserLocation(phoneNumber);
             			if(info == null) {
             				Looper.prepare();
-            				showMessage("¸ÃºÃÓÑĞÅÏ¢²»´æÔÚ,ÇëÈ·¶¨TAÔÚÏßÉÏ!");
+            				showMessage("è¯¥å¥½å‹ä¿¡æ¯ä¸å­˜åœ¨,è¯·ç¡®å®šTAåœ¨çº¿ä¸Š!");
             				Looper.loop();
             				return;
             			}
@@ -123,7 +123,7 @@ public class MyMapActivity extends Activity {
 				} catch (Exception e) {
 					Log.e("locationService", "getUserLocation error which phoneNumber:" + phoneNumber, e);
 					Looper.prepare();
-    				showMessage("»ñÈ¡ºÃÓÑĞÅÏ¢Òì³£,Çë¼ì²éÍøÂç!");
+    				showMessage("è·å–å¥½å‹ä¿¡æ¯å¼‚å¸¸,è¯·æ£€æŸ¥ç½‘ç»œ!");
     				Looper.loop();
     				return;
 				}
@@ -132,17 +132,17 @@ public class MyMapActivity extends Activity {
     }
 	
 	private void showMessage(String message) {
-		new AlertDialog.Builder(MyMapActivity.this).setTitle("ÌáÊ¾").setMessage(message).setPositiveButton("È·¶¨", null).show();
+		new AlertDialog.Builder(MyMapActivity.this).setTitle("æç¤º").setMessage(message).setPositiveButton("ç¡®å®š", null).show();
 	}
 	
 	
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		menu.add(Menu.NONE, SELECT_FRIEND, 0, "Ñ¡ÔñºÃÓÑ");
-		menu.add(Menu.NONE, PHONE_NUM_SETTING, 0, "ÉèÖÃÊÖ»úºÅÂë");
-		menu.add(Menu.NONE, SEND_MY_LOCATION, 0, "¶¨Î»×Ô¼º");
-		menu.add(Menu.NONE, EXIT, 0, "ÍË³ö");
+		menu.add(Menu.NONE, SELECT_FRIEND, 0, "é€‰æ‹©å¥½å‹");
+		menu.add(Menu.NONE, PHONE_NUM_SETTING, 0, "è®¾ç½®æ‰‹æœºå·ç ");
+		menu.add(Menu.NONE, SEND_MY_LOCATION, 0, "å®šä½è‡ªå·±");
+		menu.add(Menu.NONE, EXIT, 0, "é€€å‡º");
 		return super.onCreateOptionsMenu(menu);
 	}
 	
@@ -161,8 +161,8 @@ public class MyMapActivity extends Activity {
         	inputPhoneNum.setText(app.getMyPhoneNum());
         	
         	AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        	builder.setTitle("ÇëÊäÈëÊÖ»úºÅ").setIcon(android.R.drawable.ic_dialog_info).setView(inputPhoneNum);
-        	builder.setNegativeButton("È·¶¨", new DialogInterface.OnClickListener() {
+        	builder.setTitle("è¯·è¾“å…¥æ‰‹æœºå·").setIcon(android.R.drawable.ic_dialog_info).setView(inputPhoneNum);
+        	builder.setNegativeButton("ç¡®å®š", new DialogInterface.OnClickListener() {
 
                 public void onClick(DialogInterface dialog, int which) {
                 	String phoneNum = inputPhoneNum.getText().toString();
@@ -171,15 +171,15 @@ public class MyMapActivity extends Activity {
                 	}
                 	FindyouApplication app = (FindyouApplication) getApplication();
                 	app.setMyPhoneNum(phoneNum);
-                	Toast.makeText(getApplicationContext(), "²Ù×÷³É¹¦!", Toast.LENGTH_SHORT).show();
+                	Toast.makeText(getApplicationContext(), "æ“ä½œæˆåŠŸ!", Toast.LENGTH_SHORT).show();
                 }
             });
-        	builder.setPositiveButton("È¡Ïû", null);
+        	builder.setPositiveButton("å–æ¶ˆ", null);
             builder.show();
             break;
         case SEND_MY_LOCATION:
         	boolean result = this.locationService.requestLocation();
-        	Toast.makeText(getApplicationContext(), result ? "¶¨Î»³É¹¦!" : "¶¨Î»Ê§°Ü!", Toast.LENGTH_SHORT).show();
+        	Toast.makeText(getApplicationContext(), result ? "å®šä½æˆåŠŸ!" : "å®šä½å¤±è´¥!", Toast.LENGTH_SHORT).show();
         	break;
         case EXIT:
         	this.finish();
@@ -210,7 +210,7 @@ public class MyMapActivity extends Activity {
 	}
 	@Override
 	protected void onResume(){
-		//Èç¹ûÓĞºÃÓÑ
+		//å¦‚æœæœ‰å¥½å‹
 		FindyouApplication application = (FindyouApplication) this.getApplication();
 		String photoNumber = application.getFriendPhoneNum();
 		if(photoNumber != null) {

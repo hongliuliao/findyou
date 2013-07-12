@@ -32,7 +32,7 @@ public class PhotoBookActivity extends Activity {
         if(requestCode != REQUEST_CONTACT){
         	return;
         }
-        //µç»°±¾  
+        //ç”µè¯æœ¬  
     	if (data == null) {
             return;
         }    
@@ -68,7 +68,7 @@ public class PhotoBookActivity extends Activity {
 		    phoneNumber = phone.getString(phone.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));  
 		    Log.i("MainActivity", phoneNumber);
 		}
-		// ¹ıÂËÊÖ»ú ºÅ,Ê¹Ö®¹æ·¶
+		// è¿‡æ»¤æ‰‹æœº å·,ä½¿ä¹‹è§„èŒƒ
 		phoneNumber = StringUtils.filterPhoneNumber(phoneNumber);
 		return phoneNumber;
 	}

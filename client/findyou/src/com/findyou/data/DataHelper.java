@@ -23,7 +23,7 @@ import com.j256.ormlite.table.TableUtils;
 
 /**
  * 
- * @author ¸£½¨Ê¦·¶´óÑ§Èí¼şÑ§Ôº   ³Â±´¡¢Áõ´ó¸Õ
+ * @author ç¦å»ºå¸ˆèŒƒå¤§å­¦è½¯ä»¶å­¦é™¢   é™ˆè´ã€åˆ˜å¤§åˆš
  * 
  */
 public class DataHelper extends OrmLiteSqliteOpenHelper {
@@ -84,7 +84,7 @@ public class DataHelper extends OrmLiteSqliteOpenHelper {
 			reader.close();
 
 		} catch (Exception e) {
-			Log.e(DataHelper.class.getName(), "´´½¨Êı¾İ¿âÊ§°Ü" + e.getCause());
+			Log.e(DataHelper.class.getName(), "åˆ›å»ºæ•°æ®åº“å¤±è´¥" + e.getCause());
 			e.printStackTrace();
 		}
 	}
@@ -110,7 +110,7 @@ public class DataHelper extends OrmLiteSqliteOpenHelper {
 
 			onCreate(db, connectionSource);
 		} catch (Exception e) {
-			Log.e(DataHelper.class.getName(), "¸üĞÂÊı¾İ¿âÊ§°Ü" + e.getMessage());
+			Log.e(DataHelper.class.getName(), "æ›´æ–°æ•°æ®åº“å¤±è´¥" + e.getMessage());
 			e.printStackTrace();
 		}
 	}

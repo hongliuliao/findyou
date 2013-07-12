@@ -40,13 +40,13 @@ public class HttpClientUtils {
 		Log.i("HttpClient", "send http request which url:" + resultUrl);
 		HttpClient httpClient = new DefaultHttpClient(); 
 		try {  
-		    HttpResponse response = httpClient.execute(getMethod); //·¢ÆğGETÇëÇó  
+		    HttpResponse response = httpClient.execute(getMethod); //å‘èµ·GETè¯·æ±‚  
 		    if(response.getStatusLine().getStatusCode() != 200) { // success
 		    	throw new RuntimeException("get http result error which url:" + resultUrl);
 		    }
 		    String result = EntityUtils.toString(response.getEntity(), "utf-8");
-		    Log.i(TAG, "resCode = " + response.getStatusLine().getStatusCode()); //»ñÈ¡ÏìÓ¦Âë  
-		    Log.i(TAG, "result = " + result);//»ñÈ¡·şÎñÆ÷ÏìÓ¦ÄÚÈİ
+		    Log.i(TAG, "resCode = " + response.getStatusLine().getStatusCode()); //è·å–å“åº”ç   
+		    Log.i(TAG, "result = " + result);//è·å–æœåŠ¡å™¨å“åº”å†…å®¹
 		    return result;
 		} catch (Exception e) {  
 			Log.e("HttpClient", "getHttpGetResult error which url:" + requestUrl, e);
@@ -64,13 +64,13 @@ public class HttpClientUtils {
 		HttpClient httpClient = new DefaultHttpClient(); 
 		try {  
 			postMethod.setEntity(new UrlEncodedFormEntity(params, HTTP.UTF_8));
-		    HttpResponse response = httpClient.execute(postMethod); //·¢ÆğGETÇëÇó  
+		    HttpResponse response = httpClient.execute(postMethod); //å‘èµ·GETè¯·æ±‚  
 		    if(response.getStatusLine().getStatusCode() != 200) { // success
 		    	throw new RuntimeException("get http result error which url:" + requestUrl);
 		    }
 		    String result = EntityUtils.toString(response.getEntity(), "utf-8");
-		    Log.i(TAG, "resCode = " + response.getStatusLine().getStatusCode()); //»ñÈ¡ÏìÓ¦Âë  
-		    Log.i(TAG, "result = " + result);//»ñÈ¡·şÎñÆ÷ÏìÓ¦ÄÚÈİ
+		    Log.i(TAG, "resCode = " + response.getStatusLine().getStatusCode()); //è·å–å“åº”ç   
+		    Log.i(TAG, "result = " + result);//è·å–æœåŠ¡å™¨å“åº”å†…å®¹
 		    return result;
 		} catch (Exception e) {  
 			Log.e("HttpClient", "getHttpGetResult error which url:" + requestUrl, e);

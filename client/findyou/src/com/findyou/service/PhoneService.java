@@ -12,13 +12,13 @@ import domain.businessEntity.*;
 
 
 public class PhoneService implements IPhoneService {
-	//µ÷ÊÔÓÃ×Ö·û´®
+	//è°ƒè¯•ç”¨å­—ç¬¦ä¸²
 	private static String Tag="CardinfoService";
 	
-	//ÉùÃ÷ÁËÒ»¸öctx±äÁ¿
+	//å£°æ˜äº†ä¸€ä¸ªctxå˜é‡
 	private IDataContext ctx;
 	
-	//¹¹Ôìº¯Êı
+	//æ„é€ å‡½æ•°
 	public PhoneService(){
 		ctx=new DataContext();		
 	}

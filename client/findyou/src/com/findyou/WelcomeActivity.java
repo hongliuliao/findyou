@@ -29,7 +29,7 @@ public class WelcomeActivity extends Activity {
 		
 		AlphaAnimation alphaAnimation = new AlphaAnimation(1.0f, 0.0f);
 		alphaAnimation.setDuration(2000);
-		alphaAnimation.setFillAfter(true);// 设置动画的最后一帧是保持在View上面
+		alphaAnimation.setFillAfter(true);// 璁剧疆鍔ㄧ敾鐨勬渶鍚庝竴甯ф槸淇濇寔鍦╒iew涓婇潰
 		
 		alphaAnimation.setAnimationListener(new AnimationListener() {
 			

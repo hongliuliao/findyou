@@ -39,16 +39,16 @@ public class JsonUtils {
 	}
 	
 	/**
-	 * ×ª»»jsonÎª¶ÔÏó
-	 * @param jsonInfo LocationInfo json ĞÎÊ½ 
+	 * è½¬æ¢jsonä¸ºå¯¹è±¡
+	 * @param jsonInfo LocationInfo json å½¢å¼ 
 	 * {	'id':11,
 	 * 		'userId':'19886633'
 	 * 		'latitude':22.1,
 	 * 		'lontitude':23.4,
 	 * 		'radius':23.6,
-	 * 		'addr':'ÖĞ¹ú'
+	 * 		'addr':'ä¸­å›½'
 	 * }
-	 * @return ×ª»»ºóµÄ LocationInfo ¶ÔÏó 
+	 * @return è½¬æ¢åçš„ LocationInfo å¯¹è±¡ 
 	 */
 	public static LocationInfo toLocationInfo(String jsonInfo) {
 			try {
@@ -56,7 +56,7 @@ public class JsonUtils {
 				if(jsonObject.getInt("code") != 0) {
 					return null;
 				}
-				// È¡³öÊı¾İÀ´
+				// å–å‡ºæ•°æ®æ¥
 				jsonObject = jsonObject.getJSONObject("data");
 				LocationInfo info = new LocationInfo();
 				

@@ -88,7 +88,7 @@ public class FindyouApplication extends Application {
 		if(userInfo == null) {
 			return null;
 		}
-		return userInfo.getPhoneNumber();// 1±íÊ¾ÊÖ»úºÅ
+		return userInfo.getPhoneNumber();// 1è¡¨ç¤ºæ‰‹æœºå·
 	}
 	
 	private String getMyTelPhoneNumber() {

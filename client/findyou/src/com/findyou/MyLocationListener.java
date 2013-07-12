@@ -62,7 +62,7 @@ public class MyLocationListener implements BDLocationListener {
 		}
 	}
 	
-	// 把位置信息上传到服务器上
+	// 鎶婁綅缃俊鎭笂浼犲埌鏈嶅姟鍣ㄤ笂
 	private void sendLocationInfoToServer(final BDLocation location) {
 		new Thread() {
 			

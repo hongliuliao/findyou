@@ -51,8 +51,8 @@ public class LocationService {
 	
 	public void start(Context context, MapView mMapView, String myTelphoneNumber) {
 		this.context = (FindyouApplication) context;
-		mLocationClient = new LocationClient(context);     //ÉùÃ÷LocationClientÀà
-        mLocationClient.registerLocationListener( new MyLocationListener(mMapView, this.context));    //×¢²á¼àÌıº¯Êı
+		mLocationClient = new LocationClient(context);     //å£°æ˜LocationClientç±»
+        mLocationClient.registerLocationListener( new MyLocationListener(mMapView, this.context));    //æ³¨å†Œç›‘å¬å‡½æ•°
         mLocationClient.setLocOption(getOption());
         mLocationClient.start();
 	}
@@ -63,7 +63,7 @@ public class LocationService {
 	}
 	
 	/**
-     * Ìí¼ÓÆøÅİ
+     * æ·»åŠ æ°”æ³¡
      */
     public void addPop(MapView mMapView, double latitude, double lontitude) {
     	final String friendName = context.getFriendName();
@@ -72,7 +72,7 @@ public class LocationService {
 			final PopupOverlay pop = new PopupOverlay(mMapView, new PopupClickListener() {                  
 		        @Override  
 		        public void onClickedPopup(int index) {  
-		                //ÔÚ´Ë´¦Àípopµã»÷ÊÂ¼ş£¬indexÎªµã»÷ÇøÓòË÷Òı,µã»÷ÇøÓò×î¶à¿ÉÓĞÈı¸ö  
+		                //åœ¨æ­¤å¤„ç†popç‚¹å‡»äº‹ä»¶ï¼Œindexä¸ºç‚¹å‡»åŒºåŸŸç´¢å¼•,ç‚¹å‡»åŒºåŸŸæœ€å¤šå¯æœ‰ä¸‰ä¸ª  
 		        	Log.i("SearchActivity", "Search map");
 //		            Intent intent = new Intent();
 //		        	intent.setClass(MyMapActivity.this, BusLineSearchActivity.class);
@@ -95,20 +95,20 @@ public class LocationService {
 	private LocationClientOption getOption() {
     	LocationClientOption option = new LocationClientOption();
     	option.setOpenGps(true);
-    	option.setAddrType("all");//·µ»ØµÄ¶¨Î»½á¹û°üº¬µØÖ·ĞÅÏ¢
-    	option.setCoorType("bd09ll");//·µ»ØµÄ¶¨Î»½á¹ûÊÇ°Ù¶È¾­Î³¶È,Ä¬ÈÏÖµgcj02
-//    	option.setScanSpan(10000);//ÉèÖÃ·¢Æğ¶¨Î»ÇëÇóµÄ¼ä¸ôÊ±¼äÎª5000ms
-    	option.disableCache(true);//½ûÖ¹ÆôÓÃ»º´æ¶¨Î»
-    	option.setPoiNumber(5);	//×î¶à·µ»ØPOI¸öÊı	
-    	option.setPoiDistance(1000); //poi²éÑ¯¾àÀë		
-    	option.setPoiExtraInfo(true); //ÊÇ·ñĞèÒªPOIµÄµç»°ºÍµØÖ·µÈÏêÏ¸ĞÅÏ¢
+    	option.setAddrType("all");//è¿”å›çš„å®šä½ç»“æœåŒ…å«åœ°å€ä¿¡æ¯
+    	option.setCoorType("bd09ll");//è¿”å›çš„å®šä½ç»“æœæ˜¯ç™¾åº¦ç»çº¬åº¦,é»˜è®¤å€¼gcj02
+//    	option.setScanSpan(10000);//è®¾ç½®å‘èµ·å®šä½è¯·æ±‚çš„é—´éš”æ—¶é—´ä¸º5000ms
+    	option.disableCache(true);//ç¦æ­¢å¯ç”¨ç¼“å­˜å®šä½
+    	option.setPoiNumber(5);	//æœ€å¤šè¿”å›POIä¸ªæ•°	
+    	option.setPoiDistance(1000); //poiæŸ¥è¯¢è·ç¦»		
+    	option.setPoiExtraInfo(true); //æ˜¯å¦éœ€è¦POIçš„ç”µè¯å’Œåœ°å€ç­‰è¯¦ç»†ä¿¡æ¯
     	return option;
     }
 	
 	/**
-	 * ±£´æÓÃ»§µÄµØÀíĞÅÏ¢
-	 * @param info ÓÃ»§Î»ÖÃĞÅÏ¢
-	 * @return ×´Ì¬ÂëÓëÏûÏ¢
+	 * ä¿å­˜ç”¨æˆ·çš„åœ°ç†ä¿¡æ¯
+	 * @param info ç”¨æˆ·ä½ç½®ä¿¡æ¯
+	 * @return çŠ¶æ€ç ä¸æ¶ˆæ¯
 	 */
 	public CodeMsg saveUserLocaltion(LocationInfo info) {
 		Log.i("LocationInfoService", "start saveUserLocaltion which info:" + info);

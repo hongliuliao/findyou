@@ -11,16 +11,16 @@ package com.findyou.model;
 public class LocationInfo {
 
 	/**
-	 * 用户唯一标示
+	 * 鐢ㄦ埛鍞竴鏍囩ず
 	 */
 	private String userId;
 	
 	/**
-	 * 纬度
+	 * 绾害
 	 */
 	private double latitude;
 	/**
-	 * 经度
+	 * 缁忓害
 	 */
 	private double lontitude;
 	

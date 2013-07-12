@@ -46,10 +46,10 @@ public class MapViewLocation {
 	
 	public void setViewToLocation(double latitude, double longitude) {
 		MapController mMapController=mapView.getController();
-		// µÃµ½mMapViewµÄ¿ØÖÆÈ¨,¿ÉÒÔÓÃËü¿ØÖÆºÍÇı¶¯Æ½ÒÆºÍËõ·Å
+		// å¾—åˆ°mMapViewçš„æ§åˆ¶æƒ,å¯ä»¥ç”¨å®ƒæ§åˆ¶å’Œé©±åŠ¨å¹³ç§»å’Œç¼©æ”¾
 		GeoPoint point =new GeoPoint((int)(latitude* 1E6),(int)(longitude* 1E6));
-		//ÓÃ¸ø¶¨µÄ¾­Î³¶È¹¹ÔìÒ»¸öGeoPoint£¬µ¥Î»ÊÇÎ¢¶È (¶È * 1E6)
-		mMapController.setCenter(point);//ÉèÖÃµØÍ¼ÖĞĞÄµã
+		//ç”¨ç»™å®šçš„ç»çº¬åº¦æ„é€ ä¸€ä¸ªGeoPointï¼Œå•ä½æ˜¯å¾®åº¦ (åº¦ * 1E6)
+		mMapController.setCenter(point);//è®¾ç½®åœ°å›¾ä¸­å¿ƒç‚¹
 	}
 	
 	public void reflush() {
