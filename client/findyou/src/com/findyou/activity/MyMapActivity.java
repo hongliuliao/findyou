@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.findyou;
+package com.findyou.activity;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.baidu.mapapi.map.MapController;
 import com.baidu.mapapi.map.MapView;
+import com.findyou.R;
 import com.findyou.model.LocationInfo;
 import com.findyou.model.MapViewLocation;
 import com.findyou.server.FindyouApplication;

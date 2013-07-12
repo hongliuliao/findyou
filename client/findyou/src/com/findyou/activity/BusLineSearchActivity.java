@@ -1,4 +1,4 @@
-package com.findyou;
+package com.findyou.activity;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
@@ -27,6 +27,7 @@ import com.baidu.mapapi.search.MKSearchListener;
 import com.baidu.mapapi.search.MKSuggestionResult;
 import com.baidu.mapapi.search.MKTransitRouteResult;
 import com.baidu.mapapi.search.MKWalkingRouteResult;
+import com.findyou.R;
 import com.findyou.server.FindyouApplication;
 import com.findyou.utils.BMapUtil;
 

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.findyou;
+package com.findyou.activity;
 
 import android.util.Log;
 

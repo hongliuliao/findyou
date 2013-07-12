@@ -50,20 +50,20 @@
          >
         
         <activity
-            android:name="com.findyou.PhotoBookActivity"
+            android:name="com.findyou.activity.PhotoBookActivity"
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name="com.findyou.BusLineSearchActivity"
+            android:name="com.findyou.activity.BusLineSearchActivity"
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name="com.findyou.MyMapActivity"
+            android:name="com.findyou.activity.MyMapActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="sensor" >
 
         </activity>
-		<activity android:name="com.findyou.WelcomeActivity"
+		<activity android:name="com.findyou.activity.WelcomeActivity"
 		    		   android:configChanges="orientation|keyboardHidden"
 		    		   android:screenOrientation="sensor" >
 		    <intent-filter>

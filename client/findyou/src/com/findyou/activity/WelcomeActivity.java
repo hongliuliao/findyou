@@ -1,4 +1,4 @@
-package com.findyou;
+package com.findyou.activity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -9,6 +9,7 @@ import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.widget.ImageView;
 
+import com.findyou.R;
 import com.findyou.server.FindyouApplication;
 
 public class WelcomeActivity extends Activity {
