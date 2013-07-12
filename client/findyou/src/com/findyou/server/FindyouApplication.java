@@ -10,6 +10,7 @@ import android.telephony.TelephonyManager;
 import com.baidu.mapapi.BMapManager;
 import com.findyou.model.UserInfo;
 import com.findyou.service.PhoneService;
+import com.findyou.utils.BMapUtil;
 import com.findyou.utils.DatabaseConfigUtil;
 import com.findyou.utils.StringUtils;
 
@@ -34,6 +35,7 @@ public class FindyouApplication extends Application {
 	public void onCreate() {
 		super.onCreate();
 		DatabaseConfigUtil.initDatabase(this);// 初始化数据库
+		mBMapManager = BMapUtil.initBMapManager(this);
 	}
 	
 	/**
@@ -62,6 +64,13 @@ public class FindyouApplication extends Application {
 	 */
 	public void setRequest(boolean isRequest) {
 		this.isRequest = isRequest;
+	}
+
+	/**
+	 * @return the mBMapManager
+	 */
+	public BMapManager getmBMapManager() {
+		return mBMapManager;
 	}
 
 	/**

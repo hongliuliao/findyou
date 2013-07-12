@@ -8,24 +8,24 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.baidu.mapapi.BMapManager;
 import com.baidu.mapapi.map.MapController;
 import com.baidu.mapapi.map.MapView;
 import com.findyou.model.LocationInfo;
 import com.findyou.model.MapViewLocation;
 import com.findyou.server.FindyouApplication;
 import com.findyou.service.LocationService;
-import com.findyou.service.PhoneService;
 import com.findyou.utils.StringUtils;
 
 
@@ -35,17 +35,16 @@ import com.findyou.utils.StringUtils;
  *
  */
 public class MyMapActivity extends Activity {
-	public PhoneService phoneservice;
-	
-	BMapManager mBMapMan = null;
 	
 	MapView mMapView = null;
 	
 	LocationService locationService = new LocationService();
 	
-	MapViewLocation mapViewLocation;
+	MapViewLocation friendLocation;
 	
 	private final static int SHOW_FRIEND = 1;
+	
+	private static final int REQUEST_CONTACT = 1;
 	
 	private static String FRIEND_LATITUDE = "FRIEND_LATITUDE";
 	private static String FRIEND_LONTITUDE = "FRIEND_LONTITUDE";
@@ -63,27 +62,22 @@ public class MyMapActivity extends Activity {
             case SHOW_FRIEND:  
             	double latitude = msg.getData().getDouble(FRIEND_LATITUDE);
             	double lontitude = msg.getData().getDouble(FRIEND_LONTITUDE);
-            	locationService.showFriendLocation(mapViewLocation, latitude, lontitude);
+            	locationService.showFriendLocation(friendLocation, latitude, lontitude);
     			break;
-            }  
+            }
         };  
     };
     
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
-		mBMapMan=new BMapManager(getApplication());
-		mBMapMan.init("EB21E59591611451362F228A82E72CA98AEDC437", null); 
 		//注意：请在试用setContentView前初始化BMapManager对象，否则会报错
-		FindyouApplication application = (FindyouApplication) this.getApplication();
-		application.mBMapManager = mBMapMan;
 		setContentView(R.layout.activity_map);
-		mMapView=(MapView)findViewById(R.id.bmapView);
-		mMapView.setBuiltInZoomControls(true);
-		mapViewLocation = new MapViewLocation(mMapView);
-		//设置启用内置的缩放控件
-		MapController mMapController=mMapView.getController();
+		mMapView = (MapView) findViewById(R.id.bmapView);
+		mMapView.setBuiltInZoomControls(true);//设置启用内置的缩放控件
+		friendLocation = new MapViewLocation(mMapView);
+		
+		MapController mMapController = mMapView.getController();
 		mMapController.setZoom(12);//设置地图zoom级别
 		
 		FindyouApplication app = (FindyouApplication) this.getApplication();
@@ -147,9 +141,8 @@ public class MyMapActivity extends Activity {
 		switch (item.getItemId()) {  
         case SELECT_FRIEND:  
             Log.i("MapActivity", "select show friends");
-            Intent intent = new Intent();
-            intent.setClass(this, PhotoBookActivity.class);
-            startActivity(intent);
+            Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);  
+            startActivityForResult(intent,REQUEST_CONTACT);
             break;  
         case PHONE_NUM_SETTING:
         	final EditText inputPhoneNum = new EditText(this);
@@ -188,35 +181,58 @@ public class MyMapActivity extends Activity {
 	}
 	
 	@Override
-	protected void onDestroy(){
-	        mMapView.destroy();
-	        if(mBMapMan!=null){
-	                mBMapMan.destroy();
-	                mBMapMan=null;
-	        }
-	        super.onDestroy();
-	}
-	@Override
-	protected void onPause(){
-	        mMapView.onPause();
-	        if(mBMapMan!=null){
-	               mBMapMan.stop();
-	        }
-	        super.onPause();
-	}
-	@Override
-	protected void onResume(){
-		//如果有好友
+	protected void onResume() {
+		// 如果有好友
 		FindyouApplication application = (FindyouApplication) this.getApplication();
 		String photoNumber = application.getFriendPhoneNum();
-		if(photoNumber != null) {
+		if (photoNumber != null) {
 			startGetFriendLocation(photoNumber);
 		}
-        mMapView.onResume();
-        if(mBMapMan!=null){
-            mBMapMan.start();
+		mMapView.onResume();
+		super.onResume();
+	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);  
+        if(requestCode != REQUEST_CONTACT){
+        	return;
         }
-       super.onResume();
+        //电话本  
+    	if (data == null) {
+            return;
+        }    
+    	Cursor cursor = getContentResolver().query(data.getData(),null,null,null, null);  
+        if(cursor == null){  
+        	return;
+        }
+        cursor.moveToFirst();
+        String friendName = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
+        
+        String contactId = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID));
+        cursor.close();  
+        
+        String phoneNumber = getPhoneNumber(contactId);  
+        
+        FindyouApplication application = (FindyouApplication) this.getApplication();
+        application.setFriendName(friendName);
+        application.setFriendPhoneNum(phoneNumber);
+	}
+	
+	private String getPhoneNumber(String contactId) {
+		String phoneNumber = null;
+		Cursor phone = getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,   
+		        null,   
+		        ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = " + contactId,   
+		        null,   
+		        null);  
+		if (phone.moveToNext()) {  
+		    phoneNumber = phone.getString(phone.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));  
+		    Log.i("MainActivity", phoneNumber);
+		}
+		// 过滤手机 号,使之规范
+		phoneNumber = StringUtils.filterPhoneNumber(phoneNumber);
+		return phoneNumber;
 	}
 
 }
