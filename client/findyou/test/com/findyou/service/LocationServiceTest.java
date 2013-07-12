@@ -27,7 +27,7 @@ public class LocationServiceTest extends AndroidTestCase {
 		info.setLatitude(39.915);
 		info.setLontitude(116.404);
 		info.setRadius(44.5f);
-		info.setAddr("ÖÐ¹ú");
+		info.setAddr("ä¸­å›½");
 		
 		CodeMsg result = this.locationService.saveUserLocaltion(info);
 		assertTrue(result.getCode() == 0);

@@ -11,7 +11,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Looper;
 import android.os.Message;
 import android.provider.ContactsContract;
 import android.util.Log;
@@ -23,10 +22,12 @@ import android.widget.Toast;
 import com.baidu.mapapi.map.MapController;
 import com.baidu.mapapi.map.MapView;
 import com.findyou.R;
-import com.findyou.model.LocationInfo;
+import com.findyou.data.FindyouConstants;
+import com.findyou.model.GetFriendLocationResponse;
 import com.findyou.model.MapViewLocation;
 import com.findyou.server.FindyouApplication;
 import com.findyou.service.LocationService;
+import com.findyou.task.GetFriendLocationThread;
 import com.findyou.utils.StringUtils;
 
 
@@ -43,27 +44,26 @@ public class MyMapActivity extends Activity {
 	
 	MapViewLocation friendLocation;
 	
-	private final static int SHOW_FRIEND = 1;
-	
 	private static final int REQUEST_CONTACT = 1;
-	
-	private static String FRIEND_LATITUDE = "FRIEND_LATITUDE";
-	private static String FRIEND_LONTITUDE = "FRIEND_LONTITUDE";
 	
 	public static final int SELECT_FRIEND = 1;
 	public static final int PHONE_NUM_SETTING = 2;
 	public static final int SEND_MY_LOCATION = 3;
 	public static final int EXIT = 4;
+	private GetFriendLocationThread getFriendLocationThread;
 	
 	@SuppressLint("HandlerLeak")
 	private Handler mHandler = new Handler(){  
         
         public void handleMessage(Message msg) {  
             switch (msg.what) {  
-            case SHOW_FRIEND:  
-            	double latitude = msg.getData().getDouble(FRIEND_LATITUDE);
-            	double lontitude = msg.getData().getDouble(FRIEND_LONTITUDE);
-            	locationService.showFriendLocation(friendLocation, latitude, lontitude);
+            case GetFriendLocationResponse.SHOW_FRIEND:  
+            	GetFriendLocationResponse response = (GetFriendLocationResponse) msg.getData().getSerializable(FindyouConstants.RESULT_NAME);
+            	if(response.getCode() != FindyouConstants.SUCCESS_CODE) {
+            		showMessage(response.getMsg());
+            		return;
+            	}
+            	locationService.showFriendLocation(friendLocation, response.getLatitude(), response.getLontitude());
     			break;
             }
         };  
@@ -89,38 +89,6 @@ public class MyMapActivity extends Activity {
 		//开启定位服务
 		locationService.start(getApplicationContext(), mMapView, phoneNumber);
 	}
-	
-	private void startGetFriendLocation(final String phoneNumber) {
-    	new Thread() {
-    		
-    		@Override
-    		public void run() {
-    			try {
-    				while(true) {
-    					LocationInfo info = locationService.getUserLocation(phoneNumber);
-            			if(info == null) {
-            				Looper.prepare();
-            				showMessage("该好友信息不存在,请确定TA在线上!");
-            				Looper.loop();
-            				return;
-            			}
-            			Message msg = new Message();
-            			msg.what = SHOW_FRIEND;
-            			msg.getData().putDouble(FRIEND_LATITUDE, info.getLatitude());
-            			msg.getData().putDouble(FRIEND_LONTITUDE, info.getLontitude());
-            			mHandler.sendMessage(msg);
-            			Thread.sleep(60000);
-    				}
-				} catch (Exception e) {
-					Log.e("locationService", "getUserLocation error which phoneNumber:" + phoneNumber, e);
-					Looper.prepare();
-    				showMessage("获取好友信息异常,请检查网络!");
-    				Looper.loop();
-    				return;
-				}
-    		}
-    	}.start();
-    }
 	
 	private void showMessage(String message) {
 		new AlertDialog.Builder(MyMapActivity.this).setTitle("提示").setMessage(message).setPositiveButton("确定", null).show();
@@ -181,17 +149,6 @@ public class MyMapActivity extends Activity {
 		return super.onOptionsItemSelected(item);
 	}
 	
-	@Override
-	protected void onResume() {
-		// 如果有好友
-		FindyouApplication application = (FindyouApplication) this.getApplication();
-		String photoNumber = application.getFriendPhoneNum();
-		if (photoNumber != null) {
-			startGetFriendLocation(photoNumber);
-		}
-		mMapView.onResume();
-		super.onResume();
-	}
 	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -218,6 +175,10 @@ public class MyMapActivity extends Activity {
         FindyouApplication application = (FindyouApplication) this.getApplication();
         application.setFriendName(friendName);
         application.setFriendPhoneNum(phoneNumber);
+        if(getFriendLocationThread == null || !getFriendLocationThread.isAlive()) {
+        	getFriendLocationThread = new GetFriendLocationThread(phoneNumber, mHandler);
+        	getFriendLocationThread.start();
+        }
 	}
 	
 	private String getPhoneNumber(String contactId) {
