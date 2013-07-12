@@ -38,8 +38,8 @@ public class MapViewLocation {
 		MyLocationOverlay myOverlay = LayerUtils.getMyLocationOverlay(mapView, latitude, longitude);
 		if(lastMyOverlay != null) {
 			mapView.getOverlays().remove(lastMyOverlay);
-			lastMyOverlay = myOverlay;
 		}
+		lastMyOverlay = myOverlay;
 		mapView.getOverlays().add(myOverlay);
 		return this;
 	}
