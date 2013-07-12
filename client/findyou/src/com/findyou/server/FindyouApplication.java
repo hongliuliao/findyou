@@ -3,6 +3,7 @@
  */
 package com.findyou.server;
 
+import tool.data.DatabaseConfigUtil;
 import android.app.Application;
 import android.content.Context;
 import android.telephony.TelephonyManager;
@@ -28,6 +29,12 @@ public class FindyouApplication extends Application {
 	private volatile boolean isRequest;
 	
 	private boolean started;
+	
+	@Override
+	public void onCreate() {
+		super.onCreate();
+		DatabaseConfigUtil.initDatabase(this);// 初始化数据库
+	}
 	
 	/**
 	 * @return the started

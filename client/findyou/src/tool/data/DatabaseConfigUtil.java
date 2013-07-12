@@ -10,8 +10,10 @@ import java.util.Enumeration;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+import android.content.Context;
 import android.os.Environment;
 
+import com.findyou.data.DataHelper;
 import com.j256.ormlite.android.apptools.OrmLiteConfigUtil;
 
 /**
@@ -24,6 +26,13 @@ import com.j256.ormlite.android.apptools.OrmLiteConfigUtil;
 public class DatabaseConfigUtil extends OrmLiteConfigUtil {
 
 	public static String BUSINESSENTITYPKGNAME = "domain.businessEntity";
+	
+	public static DataHelper DATAHELPER;
+	public static String DATAFILENAME="myPhone.db";
+	
+	public static void initDatabase(Context context) {
+		DATAHELPER = new DataHelper(context, DATAFILENAME);
+	}
 
 	public static void main(String[] args) throws Exception {
 

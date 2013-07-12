@@ -21,7 +21,6 @@ import android.widget.Toast;
 import com.baidu.mapapi.BMapManager;
 import com.baidu.mapapi.map.MapController;
 import com.baidu.mapapi.map.MapView;
-import com.findyou.data.DataHelper;
 import com.findyou.model.LocationInfo;
 import com.findyou.model.MapViewLocation;
 import com.findyou.server.FindyouApplication;
@@ -37,10 +36,9 @@ import com.findyou.utils.StringUtils;
  */
 public class MyMapActivity extends Activity {
 	public PhoneService phoneservice;
-	public static DataHelper DATAHELPER;
-	public String DATAFILENAME="myPhone.db";
 	
 	BMapManager mBMapMan = null;
+	
 	MapView mMapView = null;
 	
 	LocationService locationService = new LocationService();
@@ -56,7 +54,6 @@ public class MyMapActivity extends Activity {
 	public static final int PHONE_NUM_SETTING = 2;
 	public static final int SEND_MY_LOCATION = 3;
 	public static final int EXIT = 4;
-	
 	
 	@SuppressLint("HandlerLeak")
 	private Handler mHandler = new Handler(){  
@@ -75,7 +72,7 @@ public class MyMapActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		DATAHELPER=new DataHelper(getApplicationContext(), DATAFILENAME);
+		
 		mBMapMan=new BMapManager(getApplication());
 		mBMapMan.init("EB21E59591611451362F228A82E72CA98AEDC437", null); 
 		//注意：请在试用setContentView前初始化BMapManager对象，否则会报错

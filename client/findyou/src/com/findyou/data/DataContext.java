@@ -3,9 +3,9 @@ package com.findyou.data;
 import java.sql.SQLException;
 import java.util.List;
 
+import tool.data.DatabaseConfigUtil;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.findyou.*;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.dao.GenericRawResults;
@@ -15,12 +15,12 @@ import com.j256.ormlite.support.ConnectionSource;
 
 public class DataContext  implements IDataContext{
 
-	private ConnectionSource connectionSource;//锟斤拷菘锟斤拷锟斤拷锟�
-	private SQLiteDatabase db; // 锟斤拷锟斤拷锟斤拷锟�
+	private ConnectionSource connectionSource;
+	private SQLiteDatabase db; 
 
 	public DataContext() {
-		connectionSource = MyMapActivity.DATAHELPER.getConnectionSource();
-		db = MyMapActivity.DATAHELPER.getWritableDatabase();
+		connectionSource = DatabaseConfigUtil.DATAHELPER.getConnectionSource();
+		db = DatabaseConfigUtil.DATAHELPER.getWritableDatabase();
 	}
 
 	// 锟斤拷锟斤拷
