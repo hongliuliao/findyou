@@ -88,10 +88,6 @@ public class MyMapActivity extends Activity {
 		mapViewLocation = new MapViewLocation(mMapView);
 		//设置启用内置的缩放控件
 		MapController mMapController=mMapView.getController();
-		// 得到mMapView的控制权,可以用它控制和驱动平移和缩放
-		GeoPoint point =new GeoPoint((int)(39.915* 1E6),(int)(116.404* 1E6));
-		//用给定的经纬度构造一个GeoPoint，单位是微度 (度 * 1E6)
-		mMapController.setCenter(point);//设置地图中心点
 		mMapController.setZoom(12);//设置地图zoom级别
 		
 		FindyouApplication app = (FindyouApplication) this.getApplication();
