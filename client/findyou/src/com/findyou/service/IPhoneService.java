@@ -1,6 +1,6 @@
 package com.findyou.service;
 
-import domain.businessEntity.userinfo.UserInfo;
+import com.findyou.model.UserInfo;
 
 public interface IPhoneService {
 public UserInfo getUserInfo(int id);

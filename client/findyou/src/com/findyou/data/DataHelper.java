@@ -1,40 +1,21 @@
 package com.findyou.data;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.List;
-
-
-
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
-
 import android.util.Log;
 
-
-import com.findyou.R;
+import com.findyou.model.UserInfo;
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.support.ConnectionSource;
-import com.j256.ormlite.table.DatabaseTableConfig;
-import com.j256.ormlite.table.DatabaseTableConfigLoader;
 import com.j256.ormlite.table.TableUtils;
 
 
-/**
- * 
- * @author 福建师范大学软件学院   陈贝、刘大刚
- * 
- */
 public class DataHelper extends OrmLiteSqliteOpenHelper {
 
 	private static final int DATABASE_VERSION = 1;
-	private Context context;
 
 	public DataHelper(Context context,String dataFileName) {
-		super(context, dataFileName, null, DATABASE_VERSION,
-				R.raw.ormlite_config);
-		this.context = context;
+		super(context, dataFileName, null, DATABASE_VERSION);
 	}
 
 	@Override
@@ -69,20 +50,7 @@ public class DataHelper extends OrmLiteSqliteOpenHelper {
 
 		try {
 			Log.d("DataHelper", "create database");
-			InputStream is = this.context.getResources().openRawResource(
-					R.raw.ormlite_config);
-			InputStreamReader isr = new InputStreamReader(is);
-			BufferedReader reader = new BufferedReader(isr, 4096);
-			List<DatabaseTableConfig<?>> tableConfigs = DatabaseTableConfigLoader
-					.loadDatabaseConfigFromReader(reader);
-			for (DatabaseTableConfig<?> databaseTableConfig : tableConfigs) {
-				TableUtils.createTableIfNotExists(connectionSource,
-						databaseTableConfig);
-			}
-			is.close();
-			isr.close();
-			reader.close();
-
+			TableUtils.createTableIfNotExists(connectionSource, UserInfo.class);
 		} catch (Exception e) {
 			Log.e(DataHelper.class.getName(), "创建数据库失败" + e.getCause());
 			e.printStackTrace();
@@ -92,21 +60,7 @@ public class DataHelper extends OrmLiteSqliteOpenHelper {
 	private void updateTable(SQLiteDatabase db, ConnectionSource connectionSource) {
 
 		try {
-			Log.d("DataHelper", "Update Database");
-			InputStream is = this.context.getResources().openRawResource(
-					R.raw.ormlite_config);
-			InputStreamReader isr = new InputStreamReader(is);
-			BufferedReader reader = new BufferedReader(isr, 4096);
-			List<DatabaseTableConfig<?>> tableConfigs = DatabaseTableConfigLoader
-					.loadDatabaseConfigFromReader(reader);
-
-			for (DatabaseTableConfig<?> databaseTableConfig : tableConfigs) {
-				TableUtils.dropTable(connectionSource, databaseTableConfig,
-						true);
-			}
-			is.close();
-			isr.close();
-			reader.close();
+			TableUtils.dropTable(connectionSource, UserInfo.class, true);
 
 			onCreate(db, connectionSource);
 		} catch (Exception e) {

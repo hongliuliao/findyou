@@ -1,4 +1,4 @@
-package domain.businessEntity.userinfo;
+package com.findyou.model;
 
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
@@ -10,7 +10,6 @@ public class UserInfo {
 	@DatabaseField(canBeNull = false)
 	private String phoneNumber;
 	
-	// ¹¹Ôìº¯Êý
 	public UserInfo() {
 		// ORMLite needs a no-arg constructor
 	}
