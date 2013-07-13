@@ -20,8 +20,6 @@ import com.findyou.service.LocationService;
  */
 public class MyLocationListener implements BDLocationListener {
 	
-	private MapView mMapView;
-	
 	private LocationService locationService = new LocationService();
 	
 	private FindyouApplication application;
@@ -35,7 +33,6 @@ public class MyLocationListener implements BDLocationListener {
 	 */
 	public MyLocationListener(MapView mMapView, FindyouApplication application) {
 		super();
-		this.mMapView = mMapView;
 		this.application = application;
 		mapViewLocation = new MapViewLocation(mMapView);
 	}
@@ -44,7 +41,6 @@ public class MyLocationListener implements BDLocationListener {
 	public void onReceiveLocation(BDLocation location) {
 		if (location == null || location.getLatitude() == 0 || location.getLongitude() == 0)
 			return ;
-		
 		logLocationInfo(location);
 		
 		try {
