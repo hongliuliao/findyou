@@ -42,7 +42,7 @@ public class MyLocationListener implements BDLocationListener {
 	
 	@Override
 	public void onReceiveLocation(BDLocation location) {
-		if (location == null)
+		if (location == null || location.getLatitude() == 0 || location.getLongitude() == 0)
 			return ;
 		
 		logLocationInfo(location);

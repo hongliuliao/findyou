@@ -146,7 +146,7 @@ public class MyMapActivity extends Activity {
             break;
         case SEND_MY_LOCATION:
         	boolean result = this.locationService.requestLocation();
-        	Toast.makeText(getApplicationContext(), result ? "定位成功!" : "定位失败!", Toast.LENGTH_SHORT).show();
+        	Toast.makeText(getApplicationContext(), result ? "定位请求发送成功!" : "定位请求发送失败!", Toast.LENGTH_SHORT).show();
         	break;
         case EXIT:
         	this.finish();
