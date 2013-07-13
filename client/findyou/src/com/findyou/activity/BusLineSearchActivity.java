@@ -70,7 +70,7 @@ public class BusLineSearchActivity extends Activity {
         
         // 初始化搜索模块，注册事件监听
         mSearch = new MKSearch();
-        mSearch.init(app.mBMapManager, new MKSearchListener(){
+        mSearch.init(BMapUtil.initBMapManager(app), new MKSearchListener(){
 
             @Override
             public void onGetPoiDetailSearchResult(int type, int error) {

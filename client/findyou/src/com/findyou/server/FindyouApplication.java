@@ -25,8 +25,6 @@ public class FindyouApplication extends Application {
 	
 	private String friendName;
 	
-	public BMapManager mBMapManager;
-	
 	private volatile boolean isRequest;
 	
 	private boolean started;
@@ -35,7 +33,6 @@ public class FindyouApplication extends Application {
 	public void onCreate() {
 		super.onCreate();
 		DatabaseConfigUtil.initDatabase(this);// 初始化数据库
-		mBMapManager = BMapUtil.initBMapManager(this);
 	}
 	
 	/**
@@ -64,13 +61,6 @@ public class FindyouApplication extends Application {
 	 */
 	public void setRequest(boolean isRequest) {
 		this.isRequest = isRequest;
-	}
-
-	/**
-	 * @return the mBMapManager
-	 */
-	public BMapManager getmBMapManager() {
-		return mBMapManager;
 	}
 
 	/**

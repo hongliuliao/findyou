@@ -19,6 +19,8 @@ import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.baidu.mapapi.BMapManager;
+import com.baidu.mapapi.map.MKOfflineMap;
 import com.baidu.mapapi.map.MapController;
 import com.baidu.mapapi.map.MapView;
 import com.findyou.R;
@@ -28,6 +30,7 @@ import com.findyou.model.MapViewLocation;
 import com.findyou.server.FindyouApplication;
 import com.findyou.service.LocationService;
 import com.findyou.task.GetFriendLocationThread;
+import com.findyou.utils.BMapUtil;
 import com.findyou.utils.StringUtils;
 
 
@@ -37,6 +40,8 @@ import com.findyou.utils.StringUtils;
  *
  */
 public class MyMapActivity extends Activity {
+	
+	BMapManager mBMapManager;
 	
 	MapView mMapView = null;
 	
@@ -51,6 +56,8 @@ public class MyMapActivity extends Activity {
 	public static final int SEND_MY_LOCATION = 3;
 	public static final int EXIT = 4;
 	private GetFriendLocationThread getFriendLocationThread;
+	
+	MKOfflineMap mOffline;
 	
 	@SuppressLint("HandlerLeak")
 	private Handler mHandler = new Handler(){  
@@ -72,16 +79,18 @@ public class MyMapActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		FindyouApplication app = (FindyouApplication) this.getApplication();
+		mBMapManager = BMapUtil.initBMapManager(app);
 		//注意：请在试用setContentView前初始化BMapManager对象，否则会报错
 		setContentView(R.layout.activity_map);
 		mMapView = (MapView) findViewById(R.id.bmapView);
 		mMapView.setBuiltInZoomControls(true);//设置启用内置的缩放控件
+		
 		friendLocation = new MapViewLocation(mMapView);
 		
 		MapController mMapController = mMapView.getController();
 		mMapController.setZoom(12);//设置地图zoom级别
 		
-		FindyouApplication app = (FindyouApplication) this.getApplication();
 		String phoneNumber = app.getMyPhoneNum();
 		if(phoneNumber == null || phoneNumber.trim().equals("")) {
 			this.showMessage("查询不到您的手机号,请在菜单中设置手机号,方便你的朋友找到你!");
@@ -196,5 +205,32 @@ public class MyMapActivity extends Activity {
 		phoneNumber = StringUtils.filterPhoneNumber(phoneNumber);
 		return phoneNumber;
 	}
+	
+	@Override
+	protected void onDestroy(){
+	        mMapView.destroy();
+	        if(mBMapManager!=null){
+	        	mBMapManager.destroy();
+	        	mBMapManager=null;
+	        }
+	        super.onDestroy();
+	}
+	@Override
+	protected void onPause(){
+	        mMapView.onPause();
+	        if(mBMapManager!=null){
+	        	mBMapManager.stop();
+	        }
+	        super.onPause();
+	}
+	@Override
+	protected void onResume(){
+	        mMapView.onResume();
+	        if(mBMapManager!=null){
+	        	mBMapManager.start();
+	        }
+	       super.onResume();
+	}
+
 
 }
