@@ -142,7 +142,7 @@ public class LocationService {
     		isFriendFirstLocation = false;
     	}
     	addPop(mapViewLocation.getMapView(), latitude, lontitude);
-		mapViewLocation.reflush();
+		mapViewLocation.refresh();
 	}
 	
 }

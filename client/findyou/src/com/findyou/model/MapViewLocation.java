@@ -52,7 +52,7 @@ public class MapViewLocation {
 		mMapController.setCenter(point);//设置地图中心点
 	}
 	
-	public void reflush() {
+	public void refresh() {
 		mapView.refresh();
 	}
 }

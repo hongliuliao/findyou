@@ -54,7 +54,7 @@ public class MyLocationListener implements BDLocationListener {
 				isFrist = false;
 				application.setRequest(false);
 			}
-			mMapView.refresh();
+			mapViewLocation.refresh();
 			
 			sendLocationInfoToServer(location);
 		} catch (Exception e) {
