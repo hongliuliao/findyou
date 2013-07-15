@@ -18,16 +18,6 @@ public class LocationDao {
 
 	public static Map<Long, LocationInfo> LOCATION_MAP = new ConcurrentHashMap<Long, LocationInfo>();
 	
-	static {
-		LocationInfo info = new LocationInfo();
-		info.setUserId(15801182328L + "");
-		info.setLatitude(39.99020004272461);
-		info.setLontitude(116.31400299072266);
-		info.setRadius(41.35710144042969f);
-		info.setAddr("北京市海淀区海淀西大街48号");
-		LOCATION_MAP.put(Long.parseLong(info.getUserId()), info);
-	}
-	
 	public LocationInfo getLocationInfo(long userId) {
 		return LOCATION_MAP.get(userId);
 	}
