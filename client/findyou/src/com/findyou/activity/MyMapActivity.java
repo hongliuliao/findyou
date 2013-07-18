@@ -21,7 +21,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.baidu.mapapi.BMapManager;
-import com.baidu.mapapi.map.MKOfflineMap;
 import com.baidu.mapapi.map.MapController;
 import com.baidu.mapapi.map.MapView;
 import com.findyou.R;
@@ -57,8 +56,6 @@ public class MyMapActivity extends Activity {
 	public static final int SEND_MY_LOCATION = 3;
 	public static final int EXIT = 4;
 	private GetFriendLocationThread getFriendLocationThread;
-	
-	MKOfflineMap mOffline;
 	
 	@SuppressLint("HandlerLeak")
 	private Handler mHandler = new Handler(){  
