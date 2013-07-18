@@ -37,7 +37,7 @@ import com.findyou.utils.StringUtils;
  */
 public class LocationService {
 	
-	private static final String DOMAIN_URL = "http://findyou2.duapp.com";
+	private static final String DOMAIN_URL = "http://hongliuliao.kf0309.3g.qq.com/findyou";
 
 	private static final String SAVE_LOCATION_URL = DOMAIN_URL + "/saveAddr";
 	
@@ -57,6 +57,10 @@ public class LocationService {
         mLocationClient.start();
 	}
 	
+	/**
+	 * 发送定位请求
+	 * @return 是否发送成功
+	 */
 	public boolean requestLocation() {
 		this.context.setRequest(true);
 		return mLocationClient.requestLocation() == 0;

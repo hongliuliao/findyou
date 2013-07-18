@@ -16,6 +16,7 @@ import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -89,7 +90,7 @@ public class MyMapActivity extends Activity {
 		friendLocation = new MapViewLocation(mMapView);
 		
 		MapController mMapController = mMapView.getController();
-		mMapController.setZoom(12);//设置地图zoom级别
+		mMapController.setZoom(14);//设置地图zoom级别
 		
 		String phoneNumber = app.getMyPhoneNum();
 		if(phoneNumber == null || phoneNumber.trim().equals("")) {
@@ -109,7 +110,6 @@ public class MyMapActivity extends Activity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		menu.add(Menu.NONE, SELECT_FRIEND, 0, "选择好友");
 		menu.add(Menu.NONE, PHONE_NUM_SETTING, 0, "设置手机号码");
-		menu.add(Menu.NONE, SEND_MY_LOCATION, 0, "定位自己");
 		menu.add(Menu.NONE, EXIT, 0, "退出");
 		return super.onCreateOptionsMenu(menu);
 	}
@@ -144,10 +144,6 @@ public class MyMapActivity extends Activity {
         	builder.setPositiveButton("取消", null);
             builder.show();
             break;
-        case SEND_MY_LOCATION:
-        	boolean result = this.locationService.requestLocation();
-        	Toast.makeText(getApplicationContext(), result ? "定位请求发送成功!" : "定位请求发送失败!", Toast.LENGTH_SHORT).show();
-        	break;
         case EXIT:
         	this.finish();
         	System.exit(0);
@@ -204,6 +200,11 @@ public class MyMapActivity extends Activity {
 		// 过滤手机 号,使之规范
 		phoneNumber = StringUtils.filterPhoneNumber(phoneNumber);
 		return phoneNumber;
+	}
+	
+	public void locationMe(View view) {
+		boolean result = this.locationService.requestLocation();
+    	Toast.makeText(getApplicationContext(), result ? "定位请求发送成功!" : "定位请求发送失败!", Toast.LENGTH_SHORT).show();
 	}
 	
 	@Override

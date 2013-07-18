@@ -10,12 +10,14 @@
             android:layout_height="fill_parent"
             android:clickable="true" />
 	<ImageView
+	    android:id="@+id/loc_me_img"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
 	    android:layout_marginLeft="10dp"
 	    android:layout_alignParentBottom="true"
 	    android:layout_marginBottom="10dp"
 	    android:src="@drawable/ic_launcher" 
-	    android:contentDescription="@string/app_name"/>
+	    android:contentDescription="@string/app_name"
+	    android:onClick="locationMe"/>
 	
 </RelativeLayout>
