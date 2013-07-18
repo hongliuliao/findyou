@@ -54,7 +54,7 @@ public class GetFriendLocationThread extends Thread {
 		} catch (Exception e) {
 			Log.e("locationService", "getUserLocation error which phoneNumber:" + phoneNumber, e);
 			response.setCode(FindyouConstants.EXCEPTION_CODE);
-			response.setMsg("获取好友信息异常,请检查网络!");
+			response.setMsg("获取好友信息异常,请检查网络!ErrorMsg:" + e.getMessage());
 			mHandler.sendMessage(getMsg(response));
 			return;
 		}
