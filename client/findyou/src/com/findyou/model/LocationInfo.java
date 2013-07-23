@@ -88,5 +88,14 @@ public class LocationInfo {
 	public void setLontitude(double lontitude) {
 		this.lontitude = lontitude;
 	}
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "LocationInfo [userId=" + userId + ", latitude=" + latitude
+				+ ", lontitude=" + lontitude + ", radius=" + radius + ", addr="
+				+ addr + "]";
+	}
 	
 }

@@ -35,6 +35,9 @@ public class MapViewLocation {
 	}
 
 	public MapViewLocation setLocation(double latitude, double longitude) {
+		if(!mapView.isShown()) {
+			return this;
+		}
 		MyLocationOverlay myOverlay = LayerUtils.getMyLocationOverlay(mapView, latitude, longitude);
 		if(lastMyOverlay != null) {
 			mapView.getOverlays().remove(lastMyOverlay);
@@ -53,6 +56,9 @@ public class MapViewLocation {
 	}
 	
 	public void refresh() {
+		if(!mapView.isShown()) {
+			return ;
+		}
 		mapView.refresh();
 	}
 }

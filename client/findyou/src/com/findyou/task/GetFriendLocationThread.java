@@ -18,7 +18,7 @@ import com.findyou.service.LocationService;
  */
 public class GetFriendLocationThread extends Thread {
 
-	private LocationService locationService = new LocationService();
+	private LocationService locationService = LocationService.getInstance();
 	
 	private String phoneNumber;
 	
@@ -46,10 +46,11 @@ public class GetFriendLocationThread extends Thread {
 				return;
 			}
 			while(true) {
+				Log.i("locationService", "GetFriendLocation success which locationInfo:" + info);
 				response.setLatitude(info.getLatitude());
 				response.setLontitude(info.getLontitude());
     			mHandler.sendMessage(getMsg(response));
-    			Thread.sleep(60000);
+    			Thread.sleep(10000);
 			}
 		} catch (Exception e) {
 			Log.e("locationService", "getUserLocation error which phoneNumber:" + phoneNumber, e);

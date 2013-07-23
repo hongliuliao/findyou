@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -49,12 +48,35 @@ public class LocationService {
 	
 	public boolean isFriendFirstLocation = true;
 	
-	public void start(Context context, MapView mMapView, String myTelphoneNumber) {
+	public boolean isStarted = false;
+	
+	public static final LocationService INSTANCE = new LocationService();
+	
+	private LocationService() {}
+	
+	public static LocationService getInstance() {
+		return INSTANCE;
+	}
+	
+	public void start(FindyouApplication context, MapView mMapView, boolean openGps) {
 		this.context = (FindyouApplication) context;
+		if(isStarted) {
+			return;
+		}
 		mLocationClient = new LocationClient(context);     //声明LocationClient类
         mLocationClient.registerLocationListener( new MyLocationListener(mMapView, this.context));    //注册监听函数
-        mLocationClient.setLocOption(getOption());
+        mLocationClient.setLocOption(getOption(openGps));
         mLocationClient.start();
+        isStarted = true;
+	}
+	
+	public void start(FindyouApplication context, MapView mMapView) {
+		this.start(context, mMapView, false);
+	}
+	
+	public void stop() {
+		mLocationClient.stop();
+		isStarted = false;
 	}
 	
 	/**
@@ -96,12 +118,12 @@ public class LocationService {
 		return BMapUtil.getBitmapFromView(popview);
     }
 	
-	private LocationClientOption getOption() {
+	private LocationClientOption getOption(boolean openGps) {
     	LocationClientOption option = new LocationClientOption();
-    	option.setOpenGps(true);
+    	option.setOpenGps(false);
     	option.setAddrType("all");//返回的定位结果包含地址信息
     	option.setCoorType("bd09ll");//返回的定位结果是百度经纬度,默认值gcj02
-//    	option.setScanSpan(10000);//设置发起定位请求的间隔时间为5000ms
+    	option.setScanSpan(10000);//设置发起定位请求的间隔时间为5000ms
     	option.disableCache(true);//禁止启用缓存定位
     	option.setPoiNumber(5);	//最多返回POI个数	
     	option.setPoiDistance(1000); //poi查询距离		

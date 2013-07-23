@@ -20,7 +20,7 @@ import com.findyou.service.LocationService;
  */
 public class MyLocationListener implements BDLocationListener {
 	
-	private LocationService locationService = new LocationService();
+	private LocationService locationService = LocationService.getInstance();
 	
 	private FindyouApplication application;
 	

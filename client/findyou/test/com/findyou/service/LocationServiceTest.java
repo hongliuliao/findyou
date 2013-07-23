@@ -14,7 +14,7 @@ import com.findyou.model.LocationInfo;
  */
 public class LocationServiceTest extends AndroidTestCase {
 
-	LocationService locationService = new LocationService();
+	LocationService locationService = LocationService.getInstance();
 	
 	public void testGetUserLocation() {
 		LocationInfo info = locationService.getUserLocation("15801182328");
