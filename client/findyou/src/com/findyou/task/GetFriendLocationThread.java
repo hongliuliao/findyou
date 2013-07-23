@@ -38,19 +38,24 @@ public class GetFriendLocationThread extends Thread {
 	public void run() {
 		GetFriendLocationResponse response = new GetFriendLocationResponse();
 		try {
-			LocationInfo info = locationService.getUserLocation(phoneNumber);
-			if(info == null) {
-				response.setCode(GetFriendLocationResponse.NOT_FOUND_CODE);
-				response.setMsg("该好友信息不存在,请确定TA在线上!");
-				this.mHandler.sendMessage(getMsg(response));
-				return;
-			}
 			while(true) {
+				
+				LocationInfo info = locationService.getUserLocation(phoneNumber);
+				if(info == null) {
+					response.setCode(GetFriendLocationResponse.NOT_FOUND_CODE);
+					response.setMsg("该好友信息不存在,请确定TA在线上!");
+					this.mHandler.sendMessage(getMsg(response));
+					return;
+				}
+				double lastLatitude = 0;
 				Log.i("locationService", "GetFriendLocation success which locationInfo:" + info);
-				response.setLatitude(info.getLatitude());
-				response.setLontitude(info.getLontitude());
-    			mHandler.sendMessage(getMsg(response));
-    			Thread.sleep(10000);
+				if(lastLatitude != info.getLatitude()) {
+					lastLatitude = info.getLatitude();
+					response.setLatitude(info.getLatitude());
+					response.setLontitude(info.getLontitude());
+	    			mHandler.sendMessage(getMsg(response));
+				}
+    			Thread.sleep(FindyouConstants.FRIEND_LOCATION_SCAN_SPAN);
 			}
 		} catch (Exception e) {
 			Log.e("locationService", "getUserLocation error which phoneNumber:" + phoneNumber, e);

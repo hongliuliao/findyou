@@ -21,6 +21,7 @@ import com.baidu.mapapi.map.PopupOverlay;
 import com.baidu.platform.comapi.basestruct.GeoPoint;
 import com.findyou.R;
 import com.findyou.activity.MyLocationListener;
+import com.findyou.data.FindyouConstants;
 import com.findyou.model.CodeMsg;
 import com.findyou.model.LocationInfo;
 import com.findyou.model.MapViewLocation;
@@ -104,7 +105,7 @@ public class LocationService {
 //		        	intent.setClass(MyMapActivity.this, BusLineSearchActivity.class);
 //		            startActivity(intent);
 		        }  
-		});
+			});
 			pop.showPopup(getPopBitmap(friendName), friendPoint, 32);
 		} catch (Exception e) {
 			Log.e("Add Pop", "fail which friendName:" + friendName, e);
@@ -123,7 +124,7 @@ public class LocationService {
     	option.setOpenGps(false);
     	option.setAddrType("all");//返回的定位结果包含地址信息
     	option.setCoorType("bd09ll");//返回的定位结果是百度经纬度,默认值gcj02
-    	option.setScanSpan(10000);//设置发起定位请求的间隔时间为5000ms
+    	option.setScanSpan(FindyouConstants.MY_LOCATION_SCAN_SPAN);//设置发起定位请求的间隔时间为5000ms
     	option.disableCache(true);//禁止启用缓存定位
     	option.setPoiNumber(5);	//最多返回POI个数	
     	option.setPoiDistance(1000); //poi查询距离		
@@ -162,7 +163,10 @@ public class LocationService {
 	}
 	
 	public void showFriendLocation(MapViewLocation mapViewLocation, double latitude, double lontitude) {
-    	mapViewLocation.setLocation(latitude, lontitude);
+		if(!mapViewLocation.isLocationChanged(latitude, lontitude)) {
+			return ;
+		}
+		mapViewLocation.setLocation(latitude, lontitude);
     	if(isFriendFirstLocation) {
     		mapViewLocation.setViewToLocation(latitude, lontitude);
     		isFriendFirstLocation = false;

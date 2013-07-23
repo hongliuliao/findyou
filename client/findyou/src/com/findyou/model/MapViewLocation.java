@@ -3,6 +3,8 @@
  */
 package com.findyou.model;
 
+import android.util.Log;
+
 import com.baidu.mapapi.map.MapController;
 import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.MyLocationOverlay;
@@ -34,11 +36,24 @@ public class MapViewLocation {
 		return mapView;
 	}
 
+	public boolean isLocationChanged(double latitude, double longitude) {
+		if(lastMyOverlay != null && latitude == lastMyOverlay.getMyLocation().latitude) {
+			Log.d("MapViewLocation", "location not change!");
+			return false;
+		}
+		return true;
+	}
+	
 	public MapViewLocation setLocation(double latitude, double longitude) {
 		if(!mapView.isShown()) {
 			return this;
 		}
+		if(!mapView.isActivated()) {
+			mapView.setActivated(true);
+		}
+		
 		MyLocationOverlay myOverlay = LayerUtils.getMyLocationOverlay(mapView, latitude, longitude);
+		
 		if(lastMyOverlay != null) {
 			mapView.getOverlays().remove(lastMyOverlay);
 		}
